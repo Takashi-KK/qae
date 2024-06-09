@@ -1,0 +1,10 @@
+{
+	"qa_id": "20240518_160220_A123",
+	"lines": 5,
+	"prompt_class": "class-A",
+	"temperature": 0.8,
+	"completion_tokens": 458,
+	"prompt_tokens": 80,
+	"rating": 2.5,
+	"comment": "Good Prompt - No Error"
+}

@@ -1,0 +1,33 @@
+{
+  "name": "qae_app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "get-ip": "sh get_ip.sh",
+    "set-ip-and-dev": "IP=$(npm run get-ip --silent) && next dev -H $IP",
+    "dev": "npm run set-ip-and-dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@monaco-editor/react": "^4.6.0",
+    "@mui/icons-material": "^5.15.18",
+    "@mui/material": "^5.15.18",
+    "axios": "^1.7.2",
+    "next": "14.2.3",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-dropzone": "^14.2.3"
+  },
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.3",
+    "typescript": "^5"
+  }
+}

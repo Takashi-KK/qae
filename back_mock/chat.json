@@ -1,0 +1,10 @@
+{
+	"finish_reason": "stop",
+	"content": "Now, let me explain Python's type annotations and dataclass.",
+	"completion_tokens": 416,
+	"prompt_tokens": 80,
+	"qa_id": "20240518_084815_A201",
+	"lines": 5,
+	"prompt_class": "classA",
+	"temperature": 0.5
+}
