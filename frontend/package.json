@@ -3,9 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "get-ip": "sh get_ip.sh",
-    "set-ip-and-dev": "IP=$(npm run get-ip --silent) && next dev -H $IP",
-    "dev": "npm run set-ip-and-dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
