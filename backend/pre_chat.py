@@ -3,19 +3,23 @@ import traceback
 from dataclasses import asdict, dataclass
 from datetime import datetime
 from typing import Tuple, Union
+from unittest.mock import MagicMock
 
 import toml
 from dotenv import load_dotenv
 from flask import current_app
-from openai import OpenAI
+from openai import AzureOpenAI, OpenAI
 from openai.types.chat import (
+    ChatCompletion,
     ChatCompletionMessageParam,
     ChatCompletionSystemMessageParam,
     ChatCompletionUserMessageParam,
 )
 
+from pre_openai_mock import get_response
+
 LLM_MODEL = "gpt-3.5-turbo"
-# QA_LOG_DIR = "./qa_log/"
+LLM_AZURE_MODEL = "gpt-35-turbo"
 QA_LOGFILE_EXTENSION = ".toml"
 
 
@@ -62,8 +66,23 @@ def chat_completion(
         logger.debug(type(request_data))
 
         load_dotenv()
-        api_key = os.environ.get("OPENAI_API_KEY")
-        client = OpenAI(api_key=api_key)
+
+        llm_api = os.environ.get("PRE_LLM_API")
+        model = LLM_MODEL
+        if llm_api == "Azure":
+            api_key = os.environ.get("AZURE_OPENAI_API_KEY")
+            endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT")
+            if endpoint is None:
+                raise Exception("AZURE_OPENAI_ENDPOINT is not set.")
+            client = AzureOpenAI(
+                api_key=api_key,
+                api_version="2023-12-01-preview",
+                azure_endpoint=endpoint,
+            )
+            model = LLM_AZURE_MODEL
+        else:
+            api_key = os.environ.get("OPENAI_API_KEY")
+            client = OpenAI(api_key=api_key)
 
         current_datetime = get_current_datetime()
         qa_id = current_datetime + "_" + request_data.user_id
@@ -83,11 +102,22 @@ def chat_completion(
             ),
         ]
 
-        response = client.chat.completions.create(
-            model=LLM_MODEL, messages=messages, temperature=request_data.temperature
-        )
-        response_json = response.model_dump_json(indent=2)
-        logger.debug(response_json)
+        runmode = os.environ.get("PRE_RUNMODE")
+        response: Union[MagicMock, ChatCompletion]
+        if runmode == "Mock":
+            logger.debug("--OpenAI API Mocking--")
+            loadfile = os.environ.get("PRE_MOCKDATA_FILE")
+            if loadfile is None:
+                raise Exception("PRE_MOCKDATA_FILE not defined")
+            response = get_response(loadfile)
+        else:
+            logger.debug("--OpenAI API Call--")
+            response = client.chat.completions.create(
+                model=model, messages=messages, temperature=request_data.temperature
+            )
+            logger.debug(type(response))
+            response_json = response.model_dump_json(indent=2)
+            logger.debug(response_json)
 
         if response.usage is not None:
             completion_tokens = response.usage.completion_tokens
@@ -111,10 +141,12 @@ def chat_completion(
         request_data_dict = asdict(request_data)
         logger.debug(request_data_dict)
         qa_log_dir = os.environ.get("PRE_QA_LOG_DIR")
+        if qa_log_dir is None:
+            raise Exception("PRE_QA_LOG_DIR is not set.")
         logger.debug(qa_log_dir)
         logfile = qa_log_dir + qa_id + QA_LOGFILE_EXTENSION
         chat_completion_request = {
-            "model": LLM_MODEL,
+            "model": model,
             "messages": messages,
             "temperature": request_data.temperature,
             "prompt_class": request_data.prompt_class,
@@ -130,19 +162,6 @@ def chat_completion(
         with open(logfile, "w") as f:
             toml.dump(request_qa_log, f)
             toml.dump(response_qa_log, f)
-
-        """
-    response_data: ResponseData = ResponseData(
-      finish_reason="stop",
-      content="zzzzz",
-      completion_tokens=225,
-      prompt_tokens=307,
-      qa_id="20240430_111001",
-      lines=125,
-      prompt_class="Class-Name",
-      temperature=0.8,
-    )
-    """
 
         logger.debug(response_data)
         logger.debug("- chat_completion return -")

@@ -1,0 +1,25 @@
+{
+  "id": "chatcmpl-9aDMmqvnPTzih9ITXQuORoaQc7CYb",
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "Python's dataclass is a module that provides a decorator and functions for automatically adding special methods such as `__init__`, `__repr__`, and `__eq__` to user-defined classes. It reduces the boilerplate code needed to create classes that primarily store data. Dataclasses are defined using the `@dataclass` decorator and are part of the standard library starting from Python 3.7.",
+        "role": "assistant",
+        "function_call": null,
+        "tool_calls": null
+      }
+    }
+  ],
+  "created": 1718418216,
+  "model": "gpt-3.5-turbo-0125",
+  "object": "chat.completion",
+  "system_fingerprint": null,
+  "usage": {
+    "completion_tokens": 83,
+    "prompt_tokens": 27,
+    "total_tokens": 110
+  }
+}
