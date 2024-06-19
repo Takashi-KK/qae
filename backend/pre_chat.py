@@ -2,7 +2,7 @@ import os
 import traceback
 from dataclasses import asdict, dataclass
 from datetime import datetime
-from typing import Tuple, Union
+from typing import Any, Dict, List, Optional, Tuple, Union
 from unittest.mock import MagicMock
 
 import toml
@@ -18,8 +18,9 @@ from openai.types.chat import (
 
 from pre_openai_mock import get_response
 
-LLM_MODEL = "gpt-3.5-turbo"
 LLM_AZURE_MODEL = "gpt-35-turbo"
+LLM_MODEL = "openai-gpt-3.5"
+# LLM_MODEL = "gpt-3.5-turbo"
 QA_LOGFILE_EXTENSION = ".toml"
 
 
@@ -50,10 +51,46 @@ class ResponseErrorData:
     detail: str
 
 
+@dataclass
+class Model:
+    name: str | None
+    llm_service: str | None
+    deployment_name: str | None
+    api_key: str | None
+    api_version: Optional[str] = None
+    azure_endpoint: Optional[str] = None
+
+
 def get_current_datetime() -> str:
     now = datetime.now()
     formatted_datetime = now.strftime("%Y%m%d_%H%M%S")
     return formatted_datetime
+
+
+def load_toml(file_path: str) -> Dict[str, Any]:
+    try:
+        with open(file_path, "r") as f:
+            return toml.load(f)
+    except FileNotFoundError:
+        print(f"Error: The file {file_path} was not found.")
+        return {}
+    except toml.TomlDecodeError:
+        print(f"Error: Failed to decode the file {file_path}.")
+        return {}
+
+
+def find_model_by_name(models: List[Dict[str, Any]], name: str) -> Optional[Model]:
+    for model_data in models:
+        if model_data.get("name") == name:
+            return Model(
+                name=model_data.get("name"),
+                llm_service=model_data.get("llm_service"),
+                deployment_name=model_data.get("deployment_name"),
+                api_key=model_data.get("api_key"),
+                api_version=model_data.get("api_version"),
+                azure_endpoint=model_data.get("azure_endpoint"),
+            )
+    return None
 
 
 def chat_completion(
@@ -67,22 +104,49 @@ def chat_completion(
 
         load_dotenv()
 
-        llm_api = os.environ.get("PRE_LLM_API")
-        model = LLM_MODEL
-        if llm_api == "Azure":
-            api_key = os.environ.get("AZURE_OPENAI_API_KEY")
-            endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT")
-            if endpoint is None:
-                raise Exception("AZURE_OPENAI_ENDPOINT is not set.")
+        # llm_api = os.environ.get("PRE_LLM_API")
+        def_file = os.environ.get("PRE_DEF_MODEL")
+        if def_file is None:
+            raise Exception("PRE_DEF_MODEL not defined")
+        table = load_toml(def_file)
+        model_name = LLM_MODEL  # temporal
+        if "model" in table:
+            models: List[Dict[str, Any]] = table["model"]
+            model = find_model_by_name(models, model_name)
+            if model:
+                logger.debug(f"model: {model}")
+            else:
+                raise Exception("model_name {model_name} not found")
+        else:
+            raise Exception("model not found in table")
+
+        logger.debug(f"model_name: {model_name}")
+        logger.debug(f"llm_service: {model.llm_service}")
+        logger.debug(f"api_key env: {model.api_key}")
+        if model.api_key is None:
+            raise Exception("api_key envname not defined")
+        logger.debug(f"deployment_name: {model.deployment_name}")
+        deployment_name = model.deployment_name
+        if deployment_name is None:
+            raise Exception("deployment name not defined")
+
+        api_key = os.environ.get(model.api_key)
+        if api_key is None:
+            raise Exception("api_key not defined")
+
+        client: Union[AzureOpenAI, OpenAI]
+        if model.llm_service == "Azure":
+            if model.azure_endpoint is None:
+                raise Exception("azure_endpoint is None")
             client = AzureOpenAI(
                 api_key=api_key,
-                api_version="2023-12-01-preview",
-                azure_endpoint=endpoint,
+                api_version=model.api_version,
+                azure_endpoint=model.azure_endpoint,
             )
-            model = LLM_AZURE_MODEL
-        else:
-            api_key = os.environ.get("OPENAI_API_KEY")
+        elif model.llm_service == "OpenAI":
             client = OpenAI(api_key=api_key)
+        else:
+            raise Exception("invalid llm_service")
 
         current_datetime = get_current_datetime()
         qa_id = current_datetime + "_" + request_data.user_id
@@ -113,7 +177,9 @@ def chat_completion(
         else:
             logger.debug("--OpenAI API Call--")
             response = client.chat.completions.create(
-                model=model, messages=messages, temperature=request_data.temperature
+                model=deployment_name,
+                messages=messages,
+                temperature=request_data.temperature,
             )
             logger.debug(type(response))
             response_json = response.model_dump_json(indent=2)
@@ -146,7 +212,7 @@ def chat_completion(
         logger.debug(qa_log_dir)
         logfile = qa_log_dir + qa_id + QA_LOGFILE_EXTENSION
         chat_completion_request = {
-            "model": model,
+            "model": deployment_name,
             "messages": messages,
             "temperature": request_data.temperature,
             "prompt_class": request_data.prompt_class,
