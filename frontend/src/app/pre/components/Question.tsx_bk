@@ -5,10 +5,7 @@ import {
   Grid,
   Slider,
   Button,
-  FormControl,
-  Select,
 } from "@mui/material";
-import MenuItem from "@mui/material/MenuItem";
 import React, { useState, ChangeEvent } from "react";
 import Editor from "@monaco-editor/react";
 import { sendPostRequest } from "../util/api";
@@ -149,9 +146,6 @@ const Question: React.FC<QuestionProps> = ({
     setUserContent(newValue || "");
     console.log(userContent);
   };
-  const handleGetModelList = () => {
-    console.log("handleGetModelList called");
-  };
 
   return (
     <Box sx={{ paddingTop: 1 }}>
@@ -163,21 +157,6 @@ const Question: React.FC<QuestionProps> = ({
           xs={12}
           style={{ height: "40vh", paddingLeft: "20px", paddingRight: "20px" }}
         >
-          <Grid item xs={4}>
-            <Typography variant="subtitle1">Model</Typography>
-          </Grid>
-          <Grid item xs={4}>
-            <FormControl variant="standard">
-              <Select>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={4}>
-            <Button onClick={handleGetModelList}>Get Model List</Button>
-          </Grid>
           <Grid item xs={4}>
             <Typography variant="subtitle1">Prompt Class</Typography>
           </Grid>
