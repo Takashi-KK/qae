@@ -19,9 +19,6 @@ from openai.types.chat import (
 from pre_model import PreModel
 from pre_openai_mock import get_response
 
-LLM_AZURE_MODEL = "gpt-35-turbo"
-LLM_MODEL = "openai-gpt-3.5"
-# LLM_MODEL = "gpt-3.5-turbo"
 QA_LOGFILE_EXTENSION = ".toml"
 
 
@@ -32,6 +29,7 @@ class RequestData:
     temperature: float
     prompt_class: str
     user_id: str
+    selected_model: str
 
 
 @dataclass
@@ -70,7 +68,8 @@ def chat_completion(
         load_dotenv()
 
         pre_model = PreModel()
-        model_def = pre_model.get_def(LLM_MODEL)
+        logger.debug(f"selected_model: {request_data.selected_model}")
+        model_def = pre_model.get_def(request_data.selected_model)
         if model_def is None or model_def.api_key is None:
             raise Exception("api_key not defined")
 
@@ -78,6 +77,7 @@ def chat_completion(
 
         client: Union[AzureOpenAI, OpenAI]
         if model_def.llm_service == "Azure":
+            logger.debug("llm_service: Azure")
             if model_def.azure_endpoint is None:
                 raise Exception("azure_endpoint is None")
             client = AzureOpenAI(
@@ -86,6 +86,7 @@ def chat_completion(
                 azure_endpoint=model_def.azure_endpoint,
             )
         elif model_def.llm_service == "OpenAI":
+            logger.debug("llm_service: OpenAI")
             client = OpenAI(api_key=api_key)
         else:
             raise Exception("invalid llm_service")
@@ -180,5 +181,5 @@ def chat_completion(
     except Exception as e:
         t = traceback.format_exception_only(type(e), e)
         error_response = ResponseErrorData(error=e.__class__.__name__, detail=t[0])
-        logger.debug(f"error_response: {error_response}")
+        logger.error(f"error_response: {error_response}")
         return error_response, 500

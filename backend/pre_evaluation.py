@@ -1,4 +1,8 @@
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy.orm import (  # type: ignore[attr-defined]
+  DeclarativeBase,
+  Mapped,
+  mapped_column,
+)
 from sqlalchemy.types import Float, Integer, String
 
 

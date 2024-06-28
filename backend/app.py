@@ -1,13 +1,13 @@
 import json
 import traceback
 
-import pre_get_modellist
 from flask import Flask, Response, jsonify, make_response, request
 from flask_cors import CORS
 from werkzeug.exceptions import HTTPException
 
 import pre_add_evaluation
 import pre_chat_completion
+import pre_get_modellist
 import pre_logger
 from pre_response_errordata import ResponseErrorData
 
@@ -29,6 +29,7 @@ def handle_exception(e: Exception) -> Response:
 
     t = traceback.format_exception_only(type(e), e)
     error_response = ResponseErrorData(error=e.__class__.__name__, detail=t[0])
+    app.logger.error(error_response)
     response = make_response(jsonify(error_response), status_code)
     return response
 
@@ -43,6 +44,8 @@ def get_get_modellist() -> Response:
     app.logger.info("--- GET /get_modellist received ---")
     response_data, status_code = pre_get_modellist.get_modellist()
     response = make_response(jsonify(response_data), status_code)
+    app.logger.debug("jsonify(response_data)")
+    app.logger.debug(jsonify(response_data))
     app.logger.info("--- GET /get_modellist return ---")
     return response
 
@@ -58,6 +61,7 @@ def post_chat_completion() -> Response:
         temperature=request_data_dict["temperature"],
         prompt_class=request_data_dict["prompt_class"],
         user_id=request_data_dict["user_id"],
+        selected_model=request_data_dict["selected_model"],
     )
 
     response_data, status_code = pre_chat_completion.chat_completion(request_data)

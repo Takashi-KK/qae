@@ -1,6 +1,6 @@
 import os
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Union
+from typing import List, Optional
 
 import toml
 from dotenv import load_dotenv
@@ -58,5 +58,5 @@ class PreModel:
                 return model
         return None
 
-    def get_list(self) -> List[Dict[str, Union[str, None]]]:
-        return [model.__dict__ for model in self.models]
+    def get_list(self) -> List[ModelDef]:
+        return self.models

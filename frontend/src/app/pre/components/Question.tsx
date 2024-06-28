@@ -5,15 +5,14 @@ import {
   Grid,
   Slider,
   Button,
-  FormControl,
-  Select,
 } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import React, { useState, ChangeEvent } from "react";
 import Editor from "@monaco-editor/react";
-import { sendPostRequest } from "../util/api";
+import { sendPostRequest, sendGetRequest } from "../util/api";
 
-const QUESTION_ENDPOINT = "/chat";
+const COMPLETION_ENDPOINT = "/chat_completion";
+const MODELLIST_ENDPOINT = "/get_modellist";
 
 const marks = [
   {
@@ -30,14 +29,16 @@ const marks = [
   },
 ];
 
-interface RequestData {
+// API Server Interface
+interface ChatCompletionRequestData {
   system_content: string | undefined;
   user_content: string | null;
   temperature: number;
   prompt_class: string | null;
   user_id: string;
+  selected_model: string;
 }
-interface ResponseData {
+interface ChatCompletionResponseData {
   qa_id: string;
   finish_reason: string;
   content: string;
@@ -47,16 +48,29 @@ interface ResponseData {
   prompt_class: string;
   temperature: number;
 }
+interface ModelData {
+  name: string;
+  llm_service: string;
+  deployment_name: string;
+  api_key: string;
+  api_version: string | null;
+  azure_endpoint: string | null;
+}
+interface ModelListResponseData {
+  models: ModelData[];
+}
 interface ResponseErrorData {
   error: string;
   detail: string;
 }
 
+// Component Interface
 interface QuestionProps {
   userContent: string | null;
   temperature: number;
   promptClass: string | null;
   userId: string;
+  selectedModel: string;
   setUserContent: (newValue: string) => void;
   setTemperature: (newValue: number) => void;
   setPromptClass: (promptClass: string) => void;
@@ -66,13 +80,16 @@ interface QuestionProps {
   setPromptTokens: (lines: number) => void;
   setCompletionTokens: (completionTokens: number) => void;
   setContent: (content: string) => void;
+  setSelectedModel: (newValue: string) => void;
 }
 
+// Question Component
 const Question: React.FC<QuestionProps> = ({
   userContent,
   temperature,
   promptClass,
   userId,
+  selectedModel,
   setUserContent,
   setTemperature,
   setPromptClass,
@@ -82,9 +99,14 @@ const Question: React.FC<QuestionProps> = ({
   setPromptTokens,
   setCompletionTokens,
   setContent,
+  setSelectedModel,
 }) => {
-  const [error, setError] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
+  const [askQuestionError, setAskQuestionError] = useState<string>("");
+  const [askQuestionLoading, setAskQuestionLoading] = useState<boolean>(false);
+  const [getModellistError, setGetModellistError] = useState<string>("");
+  const [getModellistLoading, setGetModellistLoading] =
+    useState<boolean>(false);
+  const [models, setModels] = useState<ModelData[]>([]);
   const inputPromptClassHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue: string = e.target.value;
     console.log(inputValue);
@@ -104,21 +126,22 @@ const Question: React.FC<QuestionProps> = ({
   };
   const handleAskQuestion = async () => {
     console.log("handleAskQuestion called");
-    setLoading(true);
-    setError("");
-    const requestData: RequestData = {
+    setAskQuestionLoading(true);
+    setAskQuestionError("");
+    const requestData: ChatCompletionRequestData = {
       system_content: process.env.NEXT_PUBLIC_SYSTEM_CONTENT,
       user_content: userContent,
       temperature: temperature,
       prompt_class: promptClass,
       user_id: userId,
+      selected_model: selectedModel,
     };
-    const url = process.env.NEXT_PUBLIC_API_SERVER_URL + QUESTION_ENDPOINT;
+    const url = process.env.NEXT_PUBLIC_API_SERVER_URL + COMPLETION_ENDPOINT;
     console.log(`url: ${url}`);
     try {
       const response = await sendPostRequest<
-        RequestData,
-        ResponseData | ResponseErrorData
+        ChatCompletionRequestData,
+        ChatCompletionResponseData | ResponseErrorData
       >(url, requestData);
       console.log(response.data);
       if ("qa_id" in response.data) {
@@ -130,15 +153,15 @@ const Question: React.FC<QuestionProps> = ({
         setContent(response.data.content);
       } else {
         const errorData = response.data as ResponseErrorData;
-        setError(errorData.detail);
+        setAskQuestionError(errorData.detail);
       }
     } catch (error) {
       console.log(error);
       if (error instanceof Error && error.message) {
-        setError(error.message);
+        setAskQuestionError(error.message);
       }
     } finally {
-      setLoading(false);
+      setAskQuestionLoading(false);
     }
   };
   const handleEditorDidMount = (editor: any, monaco: any) => {
@@ -149,8 +172,34 @@ const Question: React.FC<QuestionProps> = ({
     setUserContent(newValue || "");
     console.log(userContent);
   };
-  const handleGetModelList = () => {
+  const handleGetModelList = async () => {
     console.log("handleGetModelList called");
+    setGetModellistLoading(true);
+    setGetModellistError("");
+    const url = process.env.NEXT_PUBLIC_API_SERVER_URL + MODELLIST_ENDPOINT;
+    console.log(`url: ${url}`);
+    try {
+      const response = await sendGetRequest<
+        ModelListResponseData | ResponseErrorData
+      >(url);
+      console.log(response.data);
+      if ("models" in response.data) {
+        setModels(response.data.models);
+        setSelectedModel(response.data.models[0].name);
+      } else {
+        setGetModellistError("Invalid response data");
+      }
+    } catch (error) {
+      console.log(error);
+      if (error instanceof Error && error.message) {
+        setGetModellistError(error.message);
+      }
+    } finally {
+      setGetModellistLoading(false);
+    }
+  };
+  const handleModelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedModel(event.target.value);
   };
 
   return (
@@ -163,20 +212,38 @@ const Question: React.FC<QuestionProps> = ({
           xs={12}
           style={{ height: "40vh", paddingLeft: "20px", paddingRight: "20px" }}
         >
-          <Grid item xs={4}>
+          <Grid item xs={3}>
             <Typography variant="subtitle1">Model</Typography>
           </Grid>
-          <Grid item xs={4}>
-            <FormControl variant="standard">
-              <Select>
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
-              </Select>
-            </FormControl>
+          <Grid item xs={6}>
+            <Box width="200px">
+              <TextField
+                label="select model"
+                variant="standard"
+                select
+                fullWidth
+                value={selectedModel}
+                onChange={handleModelChange}
+              >
+                {models.map((model) => (
+                  <MenuItem key={model.name} value={model.name}>
+                    {model.name}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Box>
           </Grid>
-          <Grid item xs={4}>
-            <Button onClick={handleGetModelList}>Get Model List</Button>
+          <Grid item xs={3}>
+            <Button onClick={handleGetModelList}>Get Modellist</Button>
+          </Grid>
+          <Grid item xs={12} textAlign="center">
+            {getModellistLoading && <Typography>Loading...</Typography>}
+            {getModellistError && (
+              <Typography color="error">{getModellistError}</Typography>
+            )}
+            {!getModellistError && !getModellistLoading && (
+              <Typography>&nbsp;</Typography>
+            )}
           </Grid>
           <Grid item xs={4}>
             <Typography variant="subtitle1">Prompt Class</Typography>
@@ -217,16 +284,22 @@ const Question: React.FC<QuestionProps> = ({
                 userContent === "" ||
                 promptClass === null ||
                 promptClass === "" ||
-                loading === true
+                selectedModel === null ||
+                selectedModel === "" ||
+                askQuestionLoading === true
               }
             >
               Ask Question
             </Button>
           </Grid>
           <Grid item xs={12} textAlign="center">
-            {loading && <Typography>Loading...</Typography>}
-            {error && <Typography color="error">{error}</Typography>}
-            {!error && !loading && <Typography>&nbsp;</Typography>}
+            {askQuestionLoading && <Typography>Loading...</Typography>}
+            {askQuestionError && (
+              <Typography color="error">{askQuestionError}</Typography>
+            )}
+            {!askQuestionError && !askQuestionLoading && (
+              <Typography>&nbsp;</Typography>
+            )}
           </Grid>
           <Typography variant="subtitle1">Prompt</Typography>
           <Editor

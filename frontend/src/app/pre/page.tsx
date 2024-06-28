@@ -10,12 +10,15 @@ const PRE_DEFAULT_TEMPERATURE = 0.8;
 
 const App = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   // for request
   const [userContent, setUserContent] = useState<string | null>(null);
   const [temperature, setTemperature] = useState<number>(
     PRE_DEFAULT_TEMPERATURE
   );
   const [promptClass, setPromptClass] = useState<string>("");
+  const [selectedModel, setSelectedModel] = useState("");
+
   // for response
   const [qaId, setQaId] = useState<string>("");
   const [lines, setLines] = useState<number>(0);
@@ -51,6 +54,7 @@ const App = () => {
               temperature={temperature}
               promptClass={promptClass}
               userId={userId}
+              selectedModel={selectedModel}
               setUserContent={setUserContent}
               setTemperature={setTemperature}
               setPromptClass={setPromptClass}
@@ -60,6 +64,7 @@ const App = () => {
               setPromptTokens={setPromptTokens}
               setCompletionTokens={setCompletionTokens}
               setContent={setContent}
+              setSelectedModel={setSelectedModel}
             />
           </Grid>
           <Grid item xs={6}>

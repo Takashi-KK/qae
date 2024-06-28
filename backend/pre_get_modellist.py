@@ -1,15 +1,15 @@
 import traceback
 from dataclasses import dataclass
-from typing import Dict, List, Tuple, Union
+from typing import List, Tuple, Union
 
 from flask import current_app
 
-from pre_model import PreModel
+from pre_model import ModelDef, PreModel
 
 
 @dataclass
 class ResponseData:
-    models: List[Dict[str, Union[str, None]]]
+    models: List[ModelDef]
 
 
 @dataclass
@@ -34,5 +34,5 @@ def get_modellist() -> Tuple[Union[ResponseData, ResponseErrorData], int]:
     except Exception as e:
         t = traceback.format_exception_only(type(e), e)
         error_response = ResponseErrorData(error=e.__class__.__name__, detail=t[0])
-        logger.debug(f"error_response: {error_response}")
+        logger.error(f"error_response: {error_response}")
         return error_response, 500

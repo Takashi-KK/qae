@@ -12,7 +12,7 @@ import { sendPostRequest } from "../util/api";
 
 const SUCCESS_MESSAGE = "Added Successfully";
 const MESSAGE_TIMEOUT = 10000;
-const ANSWER_ENDPOINT = "/add";
+const ANSWER_ENDPOINT = "/add_evaluation";
 
 const marks = [
   {

@@ -93,7 +93,7 @@ def add_evaluation(
             session.rollback()
         t = traceback.format_exception_only(type(e), e)
         error_response = ResponseErrorData(error=e.__class__.__name__, detail=t[0])
-        logger.debug(f"error_response: {error_response}")
+        logger.error(f"error_response: {error_response}")
         return error_response, 500
 
     finally:

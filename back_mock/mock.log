@@ -279,3 +279,151 @@
   temperature: 0.5
 }
 20240609 11:51:50.793 INFO  --- POST response ---
+20240628 13:34:48.411 INFO  Server running on port 3001
+20240628 13:45:03.617 INFO  Server running on port 3001
+20240628 13:45:17.769 INFO  --- POST(/get_modellist) request received ---
+20240628 13:45:17.770 INFO  res : { models: [Array] }
+20240628 13:45:17.771 INFO  --- POST response ---
+20240628 13:47:28.406 INFO  --- POST(/get_modellist) request received ---
+20240628 13:47:28.407 INFO  res : { models: [Array] }
+20240628 13:47:28.408 INFO  --- POST response ---
+20240628 13:50:01.824 INFO  Server running on port 3001
+20240628 13:50:06.466 INFO  --- POST(/chat_completion) request received ---
+20240628 13:50:06.466 INFO  req : {
+  system_content: 'You are a helpful assistant.',
+  user_content: "Please tell me about Python's type annotation.\n",
+  temperature: 0.8,
+  prompt_class: 'classB',
+  user_id: 'A104',
+  selected_model: 'dp02-gpt35'
+}
+20240628 13:50:06.467 INFO  res : {
+  finish_reason: 'stop',
+  content: "Now, let me explain Python's type annotations and dataclass.",
+  completion_tokens: 416,
+  prompt_tokens: 80,
+  qa_id: '20240518_084815_A201',
+  lines: 5,
+  prompt_class: 'classA',
+  temperature: 0.5
+}
+20240628 13:50:06.468 INFO  --- POST response ---
+20240628 13:50:18.970 INFO  --- POST(/get_modellist) request received ---
+20240628 13:50:18.971 INFO  res : { models: [Array] }
+20240628 13:50:18.971 INFO  data.len : NaN
+20240628 13:50:18.971 INFO  --- POST response ---
+20240628 13:51:02.901 INFO  Server running on port 3001
+20240628 13:51:07.067 INFO  --- POST(/get_modellist) request received ---
+20240628 13:51:07.069 INFO  res : { models: [Array] }
+20240628 13:51:07.069 INFO  data.length : NaN
+20240628 13:51:07.069 INFO  --- POST response ---
+20240628 13:53:04.431 INFO  Server running on port 3001
+20240628 13:53:07.595 INFO  --- POST(/get_modellist) request received ---
+20240628 13:53:07.596 INFO  res : { models: [Array] }
+20240628 13:53:07.596 INFO  typeof : object
+20240628 13:53:07.596 INFO  --- POST response ---
+20240628 13:54:02.689 INFO  Server running on port 3001
+20240628 13:54:06.704 INFO  --- POST(/get_modellist) request received ---
+20240628 13:54:06.705 INFO  res : { models: [Array] }
+20240628 13:54:06.706 INFO  typeof : object
+20240628 13:54:06.706 INFO  data.models : [ [Object], [Object], [Object] ]
+20240628 13:54:06.706 INFO  --- POST response ---
+20240628 13:54:45.127 INFO  Server running on port 3001
+20240628 13:54:46.974 INFO  --- POST(/get_modellist) request received ---
+20240628 13:54:46.974 INFO  res : { models: [Array] }
+20240628 13:54:46.975 INFO  typeof : object
+20240628 13:54:46.975 INFO  data.models : [ [Object], [Object], [Object] ]
+20240628 13:54:46.975 INFO  data.models.length : 3
+20240628 13:54:46.975 INFO  --- POST response ---
+20240628 13:57:31.331 INFO  Server running on port 3001
+20240628 13:57:34.771 INFO  --- POST(/get_modellist) request received ---
+20240628 13:57:34.772 INFO  res : { models: [Array] }
+20240628 13:57:34.772 INFO  typeof : object
+20240628 13:57:34.772 INFO  data.models : [ [Object], [Object], [Object] ]
+20240628 13:57:34.772 INFO  data.models.length : 3
+20240628 13:57:34.773 INFO  {
+  api_key: 'OPENAI_API_KEY',
+  api_version: null,
+  azure_endpoint: null,
+  deployment_name: 'gpt-3.5-turbo',
+  llm_service: 'OpenAI',
+  name: 'openai-gpt-3.5'
+}
+20240628 13:57:34.773 INFO  {
+  api_key: 'AZURE_OPENAI_API_KEY',
+  api_version: '9999-02-01',
+  azure_endpoint: 'https://x2.openai.azure.com',
+  deployment_name: 'dp02-gpt35',
+  llm_service: 'Azure',
+  name: 'azure-gpt-3.5'
+}
+20240628 13:57:34.773 INFO  {
+  api_key: 'AZURE_OPENAI_API_KEY_USEAST',
+  api_version: '9999-02-01',
+  azure_endpoint: 'https://x3.openai.azure.com',
+  deployment_name: 'dp03-gpt4o',
+  llm_service: 'Azure',
+  name: 'azure-gpt-4o'
+}
+20240628 13:57:34.774 INFO  --- POST response ---
+20240628 13:58:56.207 INFO  Server running on port 3001
+20240628 13:58:58.304 INFO  --- POST(/get_modellist) request received ---
+20240628 13:58:58.305 INFO  data.models.length : 3
+20240628 13:58:58.305 INFO  model[0] : 
+{
+  api_key: 'OPENAI_API_KEY',
+  api_version: null,
+  azure_endpoint: null,
+  deployment_name: 'gpt-3.5-turbo',
+  llm_service: 'OpenAI',
+  name: 'openai-gpt-3.5'
+}
+20240628 13:58:58.306 INFO  model[1] : 
+{
+  api_key: 'AZURE_OPENAI_API_KEY',
+  api_version: '9999-02-01',
+  azure_endpoint: 'https://x2.openai.azure.com',
+  deployment_name: 'dp02-gpt35',
+  llm_service: 'Azure',
+  name: 'azure-gpt-3.5'
+}
+20240628 13:58:58.307 INFO  model[2] : 
+{
+  api_key: 'AZURE_OPENAI_API_KEY_USEAST',
+  api_version: '9999-02-01',
+  azure_endpoint: 'https://x3.openai.azure.com',
+  deployment_name: 'dp03-gpt4o',
+  llm_service: 'Azure',
+  name: 'azure-gpt-4o'
+}
+20240628 13:58:58.307 INFO  --- POST response ---
+20240628 13:59:23.444 INFO  --- POST(/get_modellist) request received ---
+20240628 13:59:23.445 INFO  data.models.length : 3
+20240628 13:59:23.445 INFO  model[0] : 
+{
+  api_key: 'OPENAI_API_KEY',
+  api_version: null,
+  azure_endpoint: null,
+  deployment_name: 'gpt-3.5-turbo',
+  llm_service: 'OpenAI',
+  name: 'openai-gpt-3.5'
+}
+20240628 13:59:23.446 INFO  model[1] : 
+{
+  api_key: 'AZURE_OPENAI_API_KEY',
+  api_version: '9999-02-01',
+  azure_endpoint: 'https://x2.openai.azure.com',
+  deployment_name: 'dp02-gpt35',
+  llm_service: 'Azure',
+  name: 'azure-gpt-3.5'
+}
+20240628 13:59:23.446 INFO  model[2] : 
+{
+  api_key: 'AZURE_OPENAI_API_KEY_USEAST',
+  api_version: '9999-02-01',
+  azure_endpoint: 'https://x3.openai.azure.com',
+  deployment_name: 'dp03-gpt4o',
+  llm_service: 'Azure',
+  name: 'azure-gpt-4o'
+}
+20240628 13:59:23.447 INFO  --- POST response ---
