@@ -673,6 +673,8 @@ Instructions confirmation is now complete. In the next step, we will establish e
 
 </details>
 
+</details>
+
 <details>
 <summary>Step-6. End-to-end communications</summary>
 
