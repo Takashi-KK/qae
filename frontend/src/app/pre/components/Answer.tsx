@@ -226,7 +226,7 @@ const Answer: React.FC<AnswerProps> = ({
             />
           </Grid>
           <Grid item xs={3}>
-            <Typography variant="subtitle1">Comment</Typography>
+            <Typography variant="subtitle1">Comments</Typography>
           </Grid>
           <Grid item xs={9}>
             <TextField

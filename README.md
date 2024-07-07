@@ -914,7 +914,124 @@ Once you have completed the above three inputs, the "Ask Question" button will b
 
 ### QA Logs
 
+When you submit a query using "Ask Question" and receive a response, the response content and some attributes of the object will be displayed on the right side of the screen. This information will also be saved to a file as "QA Log".
+
+#### 1. Directory and File Format for Saving
+
+The log will be saved as a text file in TOML format in the directory specified by the PRE_QA_LOG_DIR environment variable.
+
+#### 2. QA-ID
+
+A unique ID that identifies the combination of Request and Response in QA is automatically assigned.
+
+The main goal of this project is to refine prompt usage techniques through trial and error. We aim to observe how responses change based on prompt description methods, the model used, temperature settings, and whether the expected response is achieved. The QA-ID is intended to be used as a search key for analysis.
+
+**ID Naming Rules: "yyyymmdd_HHMMSS_Annn"**
+
+- yyyymmdd: Year, month, and day
+- HHMMSS: Hour, minute, and second
+- Annn: User ID (where "A" is a fixed value, and nnn is the value of the fourth octet of your computer's IP address (IPv4))
+
+The QA log file is named QA-ID.toml and is saved for each QA session.
+
+#### 3. QA-Log File Structure
+
+The file is composed of two tables: qa_request and qa_response. The qa_request.messages field is an array.
+
+An example is shown below.
+
+```toml
+[qa_request]
+model = "gpt-3.5-turbo"
+temperature = 0.2
+prompt_class = "test-case-005"
+[[qa_request.messages]]
+role = "system"
+content = "You are a helpful assistant."
+
+[[qa_request.messages]]
+role = "user"
+content = "Tell me about type annotation in Python shortly.\n"
+
+[qa_response]
+finish_reason = "stop"
+content = "Type annotation in Python is a way to specify the data types of variables, function parameters, and return values. It helps improve code readability, maintainability, and can be used by static type checkers to catch errors early. Type annotations are optional and do not affect the runtime behavior of the code."
+completion_tokens = 60
+prompt_tokens = 26
+```
+
 ### Evaluation
+
+The response obtained is assessed to determine how well it matches the expected outcome from the perspective of the Prompt Class.
+The evaluation process is completed in three steps:
+
+#### 1. Rating
+
+Response messages are rated quantitatively on a three-point scale based on evaluation criteria. However, to accommodate more nuanced evaluations, you can enter values in 0.5-point increments.
+
+#### 2. Comments
+
+Provide a qualitative evaluation of the response message. This can also be used as a memo.
+
+#### 3. Add Evaluation
+
+When you click the "Add Evaluation" button, the evaluation details will be saved to the database.
+
+### Database
+
+The QA-ID and its evaluation details are saved in a database.
+
+#### 1. Table and Schema
+
+There is only one table, named "evaluation". The schema information is as follows:
+
+```
+$ sqlite3 qa_db/qae.db
+SQLite version 3.37.2 2022-01-06 13:25:41
+Enter ".help" for usage hints.
+sqlite> .tables
+evaluation
+sqlite> .schema
+CREATE TABLE evaluation (
+	id INTEGER NOT NULL,
+	qa_id VARCHAR NOT NULL,
+	lines INTEGER NOT NULL,
+	prompt_class VARCHAR NOT NULL,
+	temperature FLOAT NOT NULL,
+	completion_tokens INTEGER NOT NULL,
+	prompt_tokens INTEGER NOT NULL,
+	rating FLOAT NOT NULL,
+	comment VARCHAR NOT NULL,
+	PRIMARY KEY (id)
+);
+sqlite>
+```
+
+#### 2. Evaluation Table
+
+The table attributes and the origin of their values.
+
+| attribute         | description       | origin  |
+| ----------------- | ----------------- | ------- |
+| qa_id             | QA-ID             | Backend |
+| lines             | Lines of prompt   | Backend |
+| prompt_class      | Prompt Class      | User    |
+| temperature       | Temperature       | User    |
+| completion_tokens | Completion Tokens | OpenAI  |
+| prompt_tokens     | Prompt Tokens     | OpenAI  |
+| rating            | Rating            | User    |
+| comment           | User Comments     | User    |
+
+#### 3. Saved Data Sample
+
+This is an example of registration when using a mock.
+
+```
+sqlite> select * from evaluation;
+1|99990599_160220_A123|5|TestCase-AAA|0.8|7777|8888|2.5|[Mock Data]Good Prompt
+sqlite>
+
+```
 
 ## LICENSE
 
