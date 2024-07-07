@@ -17,7 +17,7 @@ const NavBar: React.FC<NavBarProps> = ({ onDrawerOpen, userId, setUserId }) => {
   useEffect(() => {
     console.log("NavBar: useEffect called");
     const url = URL_USER_ID;
-    async function getSample() {
+    async function getUserID() {
       const res: Response = await fetch(url);
       const data: ResponseData = await res.json();
       let ipAddress = data.response["user-address"];
@@ -32,7 +32,7 @@ const NavBar: React.FC<NavBarProps> = ({ onDrawerOpen, userId, setUserId }) => {
       }
       setUserId(userId);
     }
-    getSample();
+    getUserID();
   }, [setUserId]);
   return (
     <>
@@ -48,7 +48,10 @@ const NavBar: React.FC<NavBarProps> = ({ onDrawerOpen, userId, setUserId }) => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Prompt Engineering Tool
+            Question/Answering Engineering Tool
+          </Typography>
+          <Typography variant="h6" component="div" sx={{ pr: 2 }}>
+            Ver. {process.env.NEXT_PUBLIC_APP_VERSION}
           </Typography>
           <Stack direction="row" spacing={2}>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>

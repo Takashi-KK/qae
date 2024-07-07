@@ -42,29 +42,29 @@ app.get("/api", (req, res) => {
 
 app.post("/chat_completion", (req, res) => {
   logger.info("--- POST(/chat_completion) request received ---");
-  logger.info("req : %s", req.body);
-  const rawdata = fs.readFileSync("chat.json");
+  logger.debug("req : %s", req.body);
+  const rawdata = fs.readFileSync("chat_completion.json");
   const data = JSON.parse(rawdata);
-  logger.info("res : %s", data);
+  logger.debug("res : %s", data);
   logger.info("--- POST response ---");
   res.status(200).json(data);
 });
 app.post("/add_evaluation", (req, res) => {
   logger.info("--- POST(/add_evaluation) request received ---");
-  logger.info("req : %s", req.body);
-  const rawdata = fs.readFileSync("add.json");
+  logger.debug("req : %s", req.body);
+  const rawdata = fs.readFileSync("add_evaluation.json");
   const data = JSON.parse(rawdata);
-  logger.info("res : %s", data);
+  logger.debug("res : %s", data);
   logger.info("--- POST response ---");
   res.status(200).json(data);
 });
 app.get("/get_modellist", (req, res) => {
   logger.info("--- POST(/get_modellist) request received ---");
-  const rawdata = fs.readFileSync("models.json");
+  const rawdata = fs.readFileSync("get_modellist.json");
   const data = JSON.parse(rawdata);
-  logger.info("data.models.length : %d", data.models.length);
+  logger.debug("data.models.length : %d", data.models.length);
   for (let i=0; i<data.models.length; i++) {
-    logger.info("model[%d] : \n%s", i, data.models[i]);
+    logger.debug("model[%d] : \n%s", i, data.models[i]);
   }
   
   logger.info("--- POST response ---");

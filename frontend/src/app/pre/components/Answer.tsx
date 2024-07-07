@@ -11,7 +11,7 @@ import Editor from "@monaco-editor/react";
 import { sendPostRequest } from "../util/api";
 
 const SUCCESS_MESSAGE = "Added Successfully";
-const MESSAGE_TIMEOUT = 10000;
+const MESSAGE_TIMEOUT = 5000;
 const ANSWER_ENDPOINT = "/add_evaluation";
 
 const marks = [

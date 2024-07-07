@@ -427,3 +427,132 @@
   name: 'azure-gpt-4o'
 }
 20240628 13:59:23.447 INFO  --- POST response ---
+20240707 11:38:45.912 INFO  Server running on port 3001
+20240707 11:45:13.939 INFO  Server running on port 3001
+20240707 11:46:40.669 INFO  Server running on port 3001
+20240707 11:46:50.213 INFO  --- POST(/get_modellist) request received ---
+20240707 11:46:50.214 INFO  data.models.length : 3
+20240707 11:46:50.214 INFO  model[0] : 
+{
+  api_key: '[Mockdata]OPENAI_API_KEY',
+  api_version: null,
+  azure_endpoint: null,
+  deployment_name: 'gpt-3.5-turbo',
+  llm_service: 'OpenAI',
+  name: 'openai-gpt-3.5'
+}
+20240707 11:46:50.215 INFO  model[1] : 
+{
+  api_key: '[Mockdata]AZURE_OPENAI_API_KEY',
+  api_version: '9999-02-01',
+  azure_endpoint: 'https://x2.openai.azure.com',
+  deployment_name: 'dp02-gpt35',
+  llm_service: 'Azure',
+  name: 'azure-gpt-3.5'
+}
+20240707 11:46:50.215 INFO  model[2] : 
+{
+  api_key: '[Mockdata]AZURE_OPENAI_API_KEY_USEAST',
+  api_version: '9999-02-01',
+  azure_endpoint: 'https://x3.openai.azure.com',
+  deployment_name: 'dp03-gpt4o',
+  llm_service: 'Azure',
+  name: 'azure-gpt-4o'
+}
+20240707 11:46:50.216 INFO  --- POST response ---
+20240707 13:20:35.379 INFO  Server running on port 3001
+20240707 13:35:51.234 INFO  --- POST(/get_modellist) request received ---
+20240707 13:35:51.236 INFO  data.models.length : 3
+20240707 13:35:51.236 INFO  model[0] : 
+{
+  api_key: '[Mockdata]OPENAI_API_KEY',
+  api_version: null,
+  azure_endpoint: null,
+  deployment_name: 'gpt-3.5-turbo',
+  llm_service: 'OpenAI',
+  name: 'openai-gpt-3.5'
+}
+20240707 13:35:51.237 INFO  model[1] : 
+{
+  api_key: '[Mockdata]AZURE_OPENAI_API_KEY',
+  api_version: '9999-02-01',
+  azure_endpoint: 'https://x2.openai.azure.com',
+  deployment_name: 'dp02-gpt35',
+  llm_service: 'Azure',
+  name: 'azure-gpt-3.5'
+}
+20240707 13:35:51.237 INFO  model[2] : 
+{
+  api_key: '[Mockdata]AZURE_OPENAI_API_KEY_USEAST',
+  api_version: '9999-02-01',
+  azure_endpoint: 'https://x3.openai.azure.com',
+  deployment_name: 'dp03-gpt4o',
+  llm_service: 'Azure',
+  name: 'azure-gpt-4o'
+}
+20240707 13:35:51.238 INFO  --- POST response ---
+20240707 13:48:24.464 INFO  Server running on port 3001
+20240707 13:48:40.203 INFO  --- POST(/get_modellist) request received ---
+20240707 13:48:40.204 DEBUG data.models.length : 3
+20240707 13:48:40.204 DEBUG model[0] : 
+{
+  api_key: '[Mockdata]OPENAI_API_KEY',
+  api_version: null,
+  azure_endpoint: null,
+  deployment_name: 'gpt-3.5-turbo',
+  llm_service: 'OpenAI',
+  name: 'openai-gpt-3.5'
+}
+20240707 13:48:40.205 DEBUG model[1] : 
+{
+  api_key: '[Mockdata]AZURE_OPENAI_API_KEY',
+  api_version: '9999-02-01',
+  azure_endpoint: 'https://x2.openai.azure.com',
+  deployment_name: 'dp02-gpt35',
+  llm_service: 'Azure',
+  name: 'azure-gpt-3.5'
+}
+20240707 13:48:40.205 DEBUG model[2] : 
+{
+  api_key: '[Mockdata]AZURE_OPENAI_API_KEY_USEAST',
+  api_version: '9999-02-01',
+  azure_endpoint: 'https://x3.openai.azure.com',
+  deployment_name: 'dp03-gpt4o',
+  llm_service: 'Azure',
+  name: 'azure-gpt-4o'
+}
+20240707 13:48:40.205 INFO  --- POST response ---
+20240707 14:03:59.364 INFO  Server running on port 3001
+20240707 14:04:12.115 INFO  --- POST(/chat_completion) request received ---
+20240707 14:04:12.115 DEBUG req : {
+  system_content: 'You are a helpful assistant.',
+  user_content: 'Hello World!',
+  temperature: 0.8,
+  prompt_class: 'test-case-01',
+  user_id: 'A104',
+  selected_model: 'openai-gpt-3.5'
+}
+20240707 14:04:12.116 DEBUG res : {
+  finish_reason: 'stop',
+  content: "[Mockdata] Now, let me explain Python's type annotations and dataclass.",
+  completion_tokens: 416,
+  prompt_tokens: 80,
+  qa_id: '99990518_084815_A201',
+  lines: 5,
+  prompt_class: 'mock data class-a',
+  temperature: 0.5
+}
+20240707 14:04:12.117 INFO  --- POST response ---
+20240707 14:15:19.204 INFO  --- POST(/add_evaluation) request received ---
+20240707 14:15:19.204 DEBUG req : {
+  qa_id: '99990518_084815_A201',
+  lines: 5,
+  prompt_class: 'test-case-01',
+  temperature: 0.8,
+  completion_tokens: 416,
+  prompt_tokens: 80,
+  rating: 1.5,
+  comment: 'Not bad.'
+}
+20240707 14:15:19.204 DEBUG res : { result: 'true' }
+20240707 14:15:19.205 INFO  --- POST response ---

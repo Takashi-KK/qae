@@ -1,6 +1,8 @@
 import json
+import os
 import traceback
 
+from dotenv import load_dotenv
 from flask import Flask, Response, jsonify, make_response, request
 from flask_cors import CORS
 from werkzeug.exceptions import HTTPException
@@ -14,7 +16,12 @@ from pre_response_errordata import ResponseErrorData
 app = Flask(__name__)
 CORS(app)
 
-app.logger = pre_logger.pre_logger(__name__)
+load_dotenv()
+
+log_dir = os.environ.get("PRE_LOG_DIR")
+if log_dir is None:
+    raise Exception("PRE_LOG_DIR not defined")
+app.logger = pre_logger.pre_logger(module_name=__name__, log_dir=log_dir)
 
 
 @app.errorhandler(Exception)

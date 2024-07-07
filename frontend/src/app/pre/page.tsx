@@ -6,9 +6,11 @@ import SideBar from "./components/SideBar";
 import Question from "./components/Question";
 import Answer from "./components/Answer";
 
-const PRE_DEFAULT_TEMPERATURE = 0.8;
+const PRE_DEFAULT_TEMPERATURE = 0.2;
 
 const App = () => {
+  console.log("App called");
+  console.log(process.env.NEXT_PUBLIC_APP_VERSION);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   // for request

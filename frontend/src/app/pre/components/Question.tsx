@@ -199,6 +199,7 @@ const Question: React.FC<QuestionProps> = ({
     }
   };
   const handleModelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log("handleModelChange called");
     setSelectedModel(event.target.value);
   };
 

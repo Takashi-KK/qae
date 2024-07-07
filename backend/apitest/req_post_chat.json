@@ -1,7 +1,0 @@
-{
-	"system_content": "You are a helpful assistant.",
-	"user_content": "Please tell me briefly about Python's dataclass.",
-	"temperature": 0.8,
-	"prompt_class": "Class-A",
-	"user_id": "A123"
-}

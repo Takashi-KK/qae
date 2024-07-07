@@ -3,5 +3,5 @@ from dataclasses import dataclass
 
 @dataclass
 class ResponseErrorData:
-  error: str
-  detail: str
+    error: str
+    detail: str

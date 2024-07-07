@@ -69,7 +69,7 @@ const SideBar: React.FC<SideBarProps> = ({
         }}
       >
         <input {...getInputProps()} />
-        <Typography sx={{ p: 1 }}>User Content</Typography>
+        <Typography sx={{ p: 1 }}>Click or Drop file</Typography>
       </Box>
     </Drawer>
   );
