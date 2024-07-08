@@ -117,7 +117,7 @@ const Question: React.FC<QuestionProps> = ({
   };
   const handleTemperatureChange = (
     event: Event,
-    newValue: number | number[]
+    newValue: number | number[],
   ) => {
     if (typeof newValue === "number") {
       console.log(newValue);

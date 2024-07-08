@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 
 export async function sendPostRequest<T, U>(
   url: string,
-  data: T
+  data: T,
 ): Promise<AxiosResponse<U>> {
   try {
     console.log("sendPostRequest called");
@@ -20,7 +20,7 @@ export async function sendPostRequest<T, U>(
 }
 
 export async function sendGetRequest<U>(
-  url: string
+  url: string,
 ): Promise<AxiosResponse<U>> {
   try {
     console.log("sendGetRequest called");

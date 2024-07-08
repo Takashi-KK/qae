@@ -215,7 +215,7 @@ Create your project directory and download programs.
 ```
 $ mkdir (your-project)
 $ cd (your-project)
-$ git clone https://github.com/Takashi-KK/qae
+$ git clone https://github.com/Takashi-KK/qae.git
 ```
 
 </details>
@@ -306,7 +306,39 @@ The QA information, stored as a TOML file in the specified directory, is recorde
 </details>
 
 <details>
-<summary>3. Model Definition</summary>
+<summary>3. Static Check</summary>
+
+While this isn't directly related to running the program, we'll outline three types of static check procedures to help organize the methods for statically checking application programs. These check procedures are applicable not only to the backend (Python code) but also to the frontend (TypeScript code), which we will discuss later.
+
+#### 1. Format Check
+
+```
+$ ruff format --check pre*.py
+11 files already formatted
+$
+```
+
+#### 2. Style Check
+
+```
+$ ruff check pre*.py
+All checks passed!
+$
+```
+
+#### 3. Type Check
+
+```
+$ mypy pre*.py
+Success: no issues found in 11 source files
+$
+
+```
+
+</details>
+
+<details>
+<summary>4. Model Definition</summary>
 Specify the connection details for the model you want to use. Write to the file specified by the PRE_DEF_MODEL environment variable (pre_model.toml is provided as an example).
 
 **name**
@@ -336,7 +368,7 @@ Rather than specifying the API_KEY directly, use the environment variable name d
 </details>
 
 <details>
-<summary>4. Create Directories</summary>
+<summary>5. Create Directories</summary>
 
 Next, create the three directories needed to start the backend server. Create it in the (your-project)/qae/backend directory.
 
@@ -367,7 +399,7 @@ This matches the directory name specified in PRE_DB_URI.
 </details>
 
 <details>
-<summary>5. Create Evaluation Table</summary>
+<summary>6. Create Evaluation Table</summary>
 Run this command. Then, use the sqlite3 command to see if the table was created.
 
 ```
@@ -483,7 +515,8 @@ If these three requests function correctly, you can verify that the backend serv
 
 ### Step-4. Setup frontend environment
 
-#### 1. Node Packages
+<details>
+<summary>1. Node Packages</summary>
 
 Install the required Node.js packages base on the downloaded package.json.
 
@@ -492,7 +525,10 @@ $ cd (your-project)/frontend
 $ npm install
 ```
 
-#### 2. Setting environment variables
+</details>
+
+<details>
+<summary>2. Setting environment variables</summary>
 
 To run the frontend server, you need to set some environment variables. Here is an example:
 
@@ -530,6 +566,49 @@ However, selecting a large file by mistake could result in it being sent to Open
 This component reads the application version information from package.json and displays it on the screen. Please do not modify this item.
 
 The front-end server environment setup is now complete. Next, verify that the server is running.
+
+</details>
+
+<details>
+<summary>3. Static Check</summary>
+
+Similar to the front end (Python code), we perform three types of static checks.
+
+#### 1. Format Check
+
+```
+$ npx prettier --check src/
+Checking formatting...
+All matched files use Prettier code style!
+$
+```
+
+#### 2. Style Check
+
+```
+$ npm run lint
+
+> qae_app@0.1.0 lint
+> next lint
+
+✔ No ESLint warnings or errors
+$
+```
+
+> [!NOTE]
+> Be careful not to confuse the npx command with the npm command.
+
+#### 3. Type Check
+
+```
+$ npx tsc
+$
+```
+
+> [!NOTE]
+> If the type check passes, no messages will be output.
+
+</details>
 
 </details>
 <details>

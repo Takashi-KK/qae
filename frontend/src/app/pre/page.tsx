@@ -16,7 +16,7 @@ const App = () => {
   // for request
   const [userContent, setUserContent] = useState<string | null>(null);
   const [temperature, setTemperature] = useState<number>(
-    PRE_DEFAULT_TEMPERATURE
+    PRE_DEFAULT_TEMPERATURE,
   );
   const [promptClass, setPromptClass] = useState<string>("");
   const [selectedModel, setSelectedModel] = useState("");

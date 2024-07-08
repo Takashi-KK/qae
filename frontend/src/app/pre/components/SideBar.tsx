@@ -47,7 +47,7 @@ const SideBar: React.FC<SideBarProps> = ({
         setUserContent("Error: invalid file type");
       }
     },
-    [setUserContent]
+    [setUserContent],
   );
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });
