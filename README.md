@@ -33,18 +33,18 @@ This documentation is designed to be straightforward and easy to understand, par
     - [(5) Create Directories](#5-create-directories)
     - [(6) Create Evaluation Table](#6-create-evaluation-table)
   - [:running_man: Step-3: Run Backend](#running_man-step-3-run-backend)
-    - [(1) Run a backend application](#1-run-a-backend-application)
-    - [(2) Send some requests](#2-send-some-requests)
+    - [(1) Run a Backend Application](#1-run-a-backend-application)
+    - [(2) Send Some Requests](#2-send-some-requests)
   - [:hammer: Step-4: Setup Frontend](#hammer-step-4-setup-frontend)
     - [(1) Node Packages](#1-node-packages)
-    - [(2) Setting environment variables](#2-setting-environment-variables-1)
+    - [(2) Setting Environment Variables](#2-setting-environment-variables-1)
     - [(3) Static Check](#3-static-check-1)
   - [:running_woman: Step-5: Run Frontend](#running_woman-step-5-run-frontend)
-    - [1. Run a frontend application](#1-run-a-frontend-application)
+    - [1. Run a Frontend Application](#1-run-a-frontend-application)
     - [(2) Open Browser](#2-open-browser)
-    - [(3) Setup and run mock server](#3-setup-and-run-mock-server)
-    - [(4) User interface instructions](#4-user-interface-instructions)
-  - [:sparkles: Step-6: End-to-end communications](#sparkles-step-6-end-to-end-communications)
+    - [(3) Setup and Run Mock Server](#3-setup-and-run-mock-server)
+    - [(4) User Interface Instructions](#4-user-interface-instructions)
+  - [:sparkles: Step-6: End-to-end Communications](#sparkles-step-6-end-to-end-communications)
     - [(1) Frontend to Backend with Mock APIs](#1-frontend-to-backend-with-mock-apis)
     - [(2) Communicate OpenAI](#2-communicate-openai)
 - [:musical_note: How To Use](#musical_note-how-to-use)
@@ -52,7 +52,7 @@ This documentation is designed to be straightforward and easy to understand, par
     - [(1) Get Modellist](#1-get-modellist)
     - [(2) Input Prompt Class](#2-input-prompt-class)
     - [(3) Input Prompt](#3-input-prompt)
-    - [(4) Set temperature](#4-set-temperature)
+    - [(4) Set Temperature](#4-set-temperature)
     - [(5) Submit](#5-submit)
   - [:memo: QA Logs](#memo-qa-logs)
     - [(1) Log File Location](#1-log-file-location)
@@ -496,7 +496,7 @@ The backend environment setup is now complete. Next, we will verify the backend 
 
 ## :running_man: Step-3: Run Backend
 
-### (1) Run a backend application
+### (1) Run a Backend Application
 
 To run the application, use the flask command.
 
@@ -508,7 +508,7 @@ WARNING: This is a development server. Do not use it in a production deployment.
 Press CTRL+C to quit
 ```
 
-### (2) Send some requests
+### (2) Send Some Requests
 
 > [!NOTE]
 > Before performing the following operations, ensure that the "run-mode" is set to mock mode.
@@ -583,7 +583,7 @@ $ cd (your-project)/frontend
 $ npm install
 ```
 
-### (2) Setting environment variables
+### (2) Setting Environment Variables
 
 To run the frontend server, you need to set some environment variables. Here is an example:
 
@@ -667,7 +667,7 @@ $
 
 ## :running_woman: Step-5: Run Frontend
 
-### 1. Run a frontend application
+### 1. Run a Frontend Application
 
 > [!NOTE]
 > This application will always run in development mode. The purpose of this project is to learn prompt engineering techniques and explore modern development methods simultaneously.
@@ -709,7 +709,7 @@ URL: http://(your-ip-address):3000/pre
 > [!IMPORTANT]
 > Avoid using localhost; always use an IP address instead.
 
-### (3) Setup and run mock server
+### (3) Setup and Run Mock Server
 
 To verify the frontend application is working, start the backend mock. Begin by setting up the backend mock environment.
 
@@ -735,7 +735,7 @@ $ node mock.js
 
 After verifying that the mock is working, the next step is to review the user interface instructions.
 
-### (4) User interface instructions
+### (4) User Interface Instructions
 
 **Get Modellist**
 
@@ -791,7 +791,7 @@ Click the “Add Evaluation” button. Ensure that the "Added Successfully" mess
 
 Instructions confirmation is now complete. In the next step, we will establish end-to-end communication from the frontend to the backend and OpenAI, conducting final operational checks.
 
-## :sparkles: Step-6: End-to-end communications
+## :sparkles: Step-6: End-to-end Communications
 
 ### (1) Frontend to Backend with Mock APIs
 
@@ -996,7 +996,7 @@ There are three ways to enter a prompt:
 4. Of course, after loading the file, you can change the prompt in the Prompt field.
    i Of course, after loading the file, you can change the prompt in the Prompt field.
 
-### (4) Set temperature
+### (4) Set Temperature
 
 Set the temperature.
 
