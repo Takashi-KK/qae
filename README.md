@@ -1,24 +1,80 @@
-![xxx](./images/qae_v010_02.png)
-
 # Question/Answering Engineering Tool
 
-## Overview
+![Question/Answering Engineering Tool](./images/qae_v010_02.png)
+
+# :tanabata_tree: Overview
 
 This project is a Question/Answering application I developed to learn prompt engineering techniques through building a GenAI application, while also gaining experience with modern development practices in languages like Python and TypeScript.
 
-### Demo
+This documentation is designed to be straightforward and easy to understand, particularly for beginner to intermediate programmers. If you encounter any unclear points or have suggestions for better ways to write the code, your comments and feedback are greatly appreciated. Let's continue learning together step by step!
+
+## :tada: Demo
 
 ![Demo](./images/video_010_03.gif)
 
-The documentation is designed to be straightforward and easy to understand, particularly for beginner to intermediate programmers. If you encounter any unclear points or have suggestions for better ways to write the code, your comments and feedback are greatly appreciated. Let's continue learning step by step!
+# :book: Table of Contents
 
-## Key Feature
+- [Question/Answering Engineering Tool](#questionanswering-engineering-tool)
+- [:tanabata_tree: Overview](#tanabata_tree-overview)
+  - [:tada: Demo](#tada-demo)
+- [:book: Table of Contents](#book-table-of-contents)
+- [:scroll: Features](#scroll-features)
+- [:ladder: Sequence](#ladder-sequence)
+- [:flower_playing_cards: Pre-requisites](#flower_playing_cards-pre-requisites)
+  - [:postbox: OS](#postbox-os)
+  - [:softball: Software](#softball-software)
+- [:books: Setup \& Run](#books-setup--run)
+  - [:point_down: Step-1: Download](#point_down-step-1-download)
+  - [:wrench: Step-2: Setup backend environment](#wrench-step-2-setup-backend-environment)
+    - [(1) Python Packages](#1-python-packages)
+    - [(2) Setting Environment Variables](#2-setting-environment-variables)
+    - [(3) Static Check](#3-static-check)
+    - [(4) Model Definition](#4-model-definition)
+    - [(5) Create Directories](#5-create-directories)
+    - [(6) Create Evaluation Table](#6-create-evaluation-table)
+  - [:running_man: Step-3: Run Backend](#running_man-step-3-run-backend)
+    - [(1) Run a backend application](#1-run-a-backend-application)
+    - [(2) Send some requests](#2-send-some-requests)
+  - [:hammer: Step-4: Setup Frontend](#hammer-step-4-setup-frontend)
+    - [(1) Node Packages](#1-node-packages)
+    - [(2) Setting environment variables](#2-setting-environment-variables-1)
+    - [(3) Static Check](#3-static-check-1)
+  - [:running_woman: Step-5. Run Frontend](#running_woman-step-5-run-frontend)
+    - [1. Run a frontend application](#1-run-a-frontend-application)
+    - [(2) Open Browser](#2-open-browser)
+    - [(3) Setup and run mock server](#3-setup-and-run-mock-server)
+    - [(4) User interface instructions](#4-user-interface-instructions)
+  - [:sparkles: Step-6. End-to-end communications](#sparkles-step-6-end-to-end-communications)
+    - [(1) Frontend to Backend with Mock APIs](#1-frontend-to-backend-with-mock-apis)
+    - [(2) Communicate OpenAI](#2-communicate-openai)
+- [:musical_note: How To Use](#musical_note-how-to-use)
+  - [:speech_balloon: Question/Answering](#speech_balloon-questionanswering)
+    - [(1) Get Modellist](#1-get-modellist)
+    - [(2) Input Prompt Class](#2-input-prompt-class)
+    - [(3) Input Prompt](#3-input-prompt)
+    - [(4) Set temperature](#4-set-temperature)
+    - [(5) Submit](#5-submit)
+  - [:memo: QA Logs](#memo-qa-logs)
+    - [(1) Log File Location](#1-log-file-location)
+    - [(2) QA-ID](#2-qa-id)
+    - [(3) Log File Formats](#3-log-file-formats)
+  - [:1st_place_medal: Evaluation](#1st_place_medal-evaluation)
+    - [(1) Rating](#1-rating)
+    - [(2) Comments](#2-comments)
+    - [(3) Add Evaluation](#3-add-evaluation)
+  - [:mag: Database](#mag-database)
+    - [(1) Table and Schema](#1-table-and-schema)
+    - [(2) Evaluation Table](#2-evaluation-table)
+    - [(3) Saved Data Sample](#3-saved-data-sample)
+- [:balance_scale: LICENSE](#balance_scale-license)
+
+# :scroll: Features
 
 - Saving questions and answers: These are saved in a toml file with the date and time as the key. Some elements of the response data from OpenAI are also saved.
 - You can select the model, specify temperature and prompt class. The prompt class can be freely specified by the user, such as the verification viewpoint or test case number.
 - Saving operation logs: The flask logger is used to save backend operation and event logs, debug information, etc.
 
-## Basic Sequence
+# :ladder: Sequence
 
 ```mermaid
 sequenceDiagram
@@ -33,7 +89,7 @@ sequenceDiagram
     Browser->>Frontend: HandleGetModelList
     Note left of Browser: <get modellist>
     Frontend->>Backend: GET /get_modellist
-    Note right of Backend: load PRE_DEF_MODEL (pre_model.toml)
+    Note right of Backend: load PRE_DEF_MODEL (.model_env.toml)
     Backend->>Frontend: Usable Models
     Frontend->>Browser: Usable Models
     Browser->>Frontend: HandleAskQuestion (model, prompt)
@@ -53,9 +109,9 @@ sequenceDiagram
     Frontend-->>Browser: return
 ```
 
-## Prerequisites
+# :flower_playing_cards: Pre-requisites
 
-### OS
+## :postbox: OS
 
 I typically develop on Ubuntu, but I managed to get it running on Windows as well.
 
@@ -70,7 +126,7 @@ $
 
 ```
 
-### Software
+## :softball: Software
 
 - Python >= 3.10, (pyenv)
 - Flask >= 3.0
@@ -80,7 +136,7 @@ $
 If you haven't installed these software applications yet, please refer to the notes below.
 
 <details>
-<summary>Install Python (pyenv)</summary>
+<summary> Install Python (pyenv)</summary>
 Please refer to the following website.
 
 https://github.com/pyenv/pyenv
@@ -201,14 +257,11 @@ $
 
 </details>
 
-## Installation & Setup
+# :books: Setup & Run
 
 The steps outlined here might seem a bit tedious process, but if you try to do everything at once and it doesn't work, it will be difficult to identify the cause. More haste, less speed.
 
-<details>
-<summary>Step-1. Download</summary>
-
-### Step-1. Download
+## :point_down: Step-1: Download
 
 Create your project directory and download programs.
 
@@ -218,15 +271,10 @@ $ cd (your-project)
 $ git clone https://github.com/Takashi-KK/qae.git
 ```
 
-</details>
+## :wrench: Step-2: Setup backend environment
 
-<details>
-<summary>Step-2. Setup backend environment</summary>
+### (1) Python Packages
 
-### Step-2. Setup backend environment
-
-<details>
-<summary>1. Python Packages</summary>
 First, install the packages defined in requirements.txt
 
 ```
@@ -236,13 +284,11 @@ $ pip install -r requirements.txt
 $
 ```
 
-</details>
+### (2) Setting Environment Variables
 
-<details>
-<summary>2. Setting Environment Variables</summary>
 To run the backend server, you need to set some environment variables. Here is an example:
 
-**(your-project)/qae/backend/.env**
+**[(your-project)/qae/backend/.env]**
 
 ```
 # --- for input ---
@@ -252,7 +298,7 @@ OPENAI_API_KEY="sk-......."
 #AZURE_OPENAI_API_KEY="xxxxx"
 
 # Available Model Definitions
-PRE_DEF_MODEL="pre_model.toml"
+PRE_DEF_MODEL=".model_env.toml"
 
 # OpenAI API Runmode
 #PRE_RUNMODE="Mock"		# Runmode: "Mock" or nothing
@@ -272,6 +318,9 @@ PRE_QA_LOG_DIR="./qa_log/"
 PRE_DB_URI="sqlite:///qa_db/qae.db"
 
 ```
+
+<details>
+<summary>Descriptions</summary>
 
 **OPENAI_API_KEY (AZURE_OPENAI_API_KEY)**
 
@@ -305,12 +354,11 @@ The QA information, stored as a TOML file in the specified directory, is recorde
 
 </details>
 
-<details>
-<summary>3. Static Check</summary>
+### (3) Static Check
 
 While this isn't directly related to running the program, we'll outline three types of static check procedures to help organize the methods for statically checking application programs. These check procedures are applicable not only to the backend (Python code) but also to the frontend (TypeScript code), which we will discuss later.
 
-#### 1. Format Check
+**Format Check**
 
 ```
 $ ruff format --check pre*.py
@@ -318,7 +366,7 @@ $ ruff format --check pre*.py
 $
 ```
 
-#### 2. Style Check
+**Style Check**
 
 ```
 $ ruff check pre*.py
@@ -326,7 +374,7 @@ All checks passed!
 $
 ```
 
-#### 3. Type Check
+**Type Check**
 
 ```
 $ mypy pre*.py
@@ -335,11 +383,34 @@ $
 
 ```
 
-</details>
+### (4) Model Definition
+
+Specify the connection details for the model you want to use. Write to the file specified by the PRE_DEF_MODEL environment variable.
 
 <details>
-<summary>4. Model Definition</summary>
-Specify the connection details for the model you want to use. Write to the file specified by the PRE_DEF_MODEL environment variable (pre_model.toml is provided as an example).
+<summary>Descriptions</summary>
+
+This is a sample file.
+
+[.model_env.toml]
+
+```
+# Model Definition Table
+[[model]]
+name = "openai-gpt-3.5"
+llm_service = "OpenAI"
+deployment_name = "gpt-3.5-turbo"
+api_key = "OPENAI_API_KEY"
+
+[[model]]
+name = "azure-gpt-3.5"
+llm_service = "Azure"
+deployment_name = "dp02-gpt35"
+api_key = "AZURE_OPENAI_API_KEY"
+api_version = "2024-02-01"
+azure_endpoint = "https://xxx.openai.azure.com"
+
+```
 
 **name**
 
@@ -367,12 +438,11 @@ Rather than specifying the API_KEY directly, use the environment variable name d
 
 </details>
 
-<details>
-<summary>5. Create Directories</summary>
+### (5) Create Directories
 
 Next, create the three directories needed to start the backend server. Create it in the (your-project)/qae/backend directory.
 
-### CreateEvent/Debug Log Directory
+**Event/Debug Log Dir**
 
 Create a directory named as specified by the PRE_LOG_DIR environment variable.
 
@@ -380,7 +450,7 @@ Create a directory named as specified by the PRE_LOG_DIR environment variable.
 $ mkdir log
 ```
 
-### Create QA Log Directory
+**QA Log Dir**
 
 Create a directory named as specified by the PRE_QA_LOG_DIR environment variable.
 
@@ -388,7 +458,7 @@ Create a directory named as specified by the PRE_QA_LOG_DIR environment variable
 $ mkdir qa_log
 ```
 
-### Create QA DB Directory
+**QA DB Dir**
 
 This matches the directory name specified in PRE_DB_URI.
 
@@ -396,10 +466,8 @@ This matches the directory name specified in PRE_DB_URI.
 (.venv)$ mkdir qa_db
 ```
 
-</details>
+### (6) Create Evaluation Table
 
-<details>
-<summary>6. Create Evaluation Table</summary>
 Run this command. Then, use the sqlite3 command to see if the table was created.
 
 ```
@@ -426,16 +494,9 @@ sqlite>
 
 The backend environment setup is now complete. Next, we will verify the backend startup independently (without using the frontend app).
 
-</details>
+## :running_man: Step-3: Run Backend
 
-</details>
-
-<details>
-<summary>Step-3. Check the backend server running</summary>
-
-### Step-3. Check the backend server running
-
-#### 1. Run the backend application
+### (1) Run a backend application
 
 To run the application, use the flask command.
 
@@ -447,7 +508,7 @@ WARNING: This is a development server. Do not use it in a production deployment.
 Press CTRL+C to quit
 ```
 
-#### 2. Sending some requests
+### (2) Send some requests
 
 > [!NOTE]
 > Before performing the following operations, ensure that the "run-mode" is set to mock mode.
@@ -460,9 +521,9 @@ Send a request to the backend server using an API client tool. For example, you 
 
 ![GET get_modellist](./images/s03_02_get_modellist.png)
 
-This JSON response data is generated based on the information defined in pre_model.toml (the file specified by the environment variable PRE_DEF_MODEL).
+This JSON data is based on the contents of the file specified by the environment variable PRE_DEF_MODEL.
 
-Next, send a POST request with the data from "apitest/req_post_chat_completion.json".
+Next, send a POST request with the data from "apitest/req_post_chat_completion.json". Please ensure that the value of the `"selected_model"` property is updated according to the value specified in the PRE_DEF_MODEL file.
 
 - URL: http://localhost:5000/chat_completion
 - Method: POST
@@ -479,11 +540,14 @@ Next, send a POST request with the data from "apitest/req_post_chat_completion.j
 }
 ```
 
+> [!TIP]
+> In ThunderClient, you might find that selecting "Edit" and "Paste" from the menu doesn’t work. If that happens, try using "Ctrl-V" to paste.
+
 After you click the "Send" button, make sure you see a response with status 200.
 
 ![POST chat_completion](./images/s03_02_post_chat_completion.png)
 
-"As a side note, the response data is generated based on the contents of pre_mockdata.json, which is specified by the environment variable PRE_MOCKDATA_FILE."
+As a side note, the response data is generated based on the contents of pre_mockdata.json, which is specified by the environment variable PRE_MOCKDATA_FILE.
 
 Similarly, send a request to the add_evaluation endpoint using the POST method. Use apitest/req_post_add_evaluation.json as the data to be sent.
 
@@ -491,7 +555,7 @@ Similarly, send a request to the add_evaluation endpoint using the POST method. 
 - Method: POST
 - Json Data: see below
 
-```
+```json
 {
   "qa_id": "99990599_160220_A123",
   "lines": 5,
@@ -508,15 +572,9 @@ Similarly, send a request to the add_evaluation endpoint using the POST method. 
 
 If these three requests function correctly, you can verify that the backend server environment has been set up correctly. Once the backend server environment is established, you can proceed to configure the frontend server environment.
 
-</details>
+## :hammer: Step-4: Setup Frontend
 
-<details>
-<summary>Step-4. Setup frontend environment</summary>
-
-### Step-4. Setup frontend environment
-
-<details>
-<summary>1. Node Packages</summary>
+### (1) Node Packages
 
 Install the required Node.js packages base on the downloaded package.json.
 
@@ -525,12 +583,12 @@ $ cd (your-project)/frontend
 $ npm install
 ```
 
-</details>
-
-<details>
-<summary>2. Setting environment variables</summary>
+### (2) Setting environment variables
 
 To run the frontend server, you need to set some environment variables. Here is an example:
+
+<details>
+<summary>Descriptions</summary>
 
 **(your-project)/qae/frontend/.env_local**
 
@@ -569,12 +627,11 @@ The front-end server environment setup is now complete. Next, verify that the se
 
 </details>
 
-<details>
-<summary>3. Static Check</summary>
+### (3) Static Check
 
 Similar to the front end (Python code), we perform three types of static checks.
 
-#### 1. Format Check
+**Format Check**
 
 ```
 $ npx prettier --check src/
@@ -583,7 +640,7 @@ All matched files use Prettier code style!
 $
 ```
 
-#### 2. Style Check
+**Style Check**
 
 ```
 $ npm run lint
@@ -598,7 +655,7 @@ $
 > [!NOTE]
 > Be careful not to confuse the npx command with the npm command.
 
-#### 3. Type Check
+**Type Check**
 
 ```
 $ npx tsc
@@ -608,16 +665,9 @@ $
 > [!NOTE]
 > If the type check passes, no messages will be output.
 
-</details>
+## :running_woman: Step-5. Run Frontend
 
-</details>
-<details>
-<summary>Step-5. Check the frontend server running</summary>
-
-### Step-5. Check the frontend server running
-
-<details>
-<summary>1. Run the frontend server</summary>
+### 1. Run a frontend application
 
 > [!NOTE]
 > This application will always run in development mode. The purpose of this project is to learn prompt engineering techniques and explore modern development methods simultaneously.
@@ -640,10 +690,7 @@ $ npm run dev
 
 ```
 
-</details>
-
-<details>
-<summary>2. Launching browser</summary>
+### (2) Open Browser
 
 > [!IMPORTANT]
 > Before launching the browser, ensure that the environment variables defined in ".env.local" are set as follows:
@@ -662,14 +709,11 @@ URL: http://(your-ip-address):3000/pre
 > [!IMPORTANT]
 > Avoid using localhost; always use an IP address instead.
 
-</details>
-
-<details>
-<summary>3. Backend mock environment setup and startup</summary>
+### (3) Setup and run mock server
 
 To verify the frontend application is working, start the backend mock. Begin by setting up the backend mock environment.
 
-**Install Node Packages**
+**Setup a mock server**
 
 Install the packages required for mock startup.
 
@@ -680,7 +724,7 @@ $ npm install
 $
 ```
 
-**Mock Start**
+**Run a mock server**
 
 Start the mock. If it starts successfully, the following log will be displayed.
 
@@ -691,10 +735,7 @@ $ node mock.js
 
 After verifying that the mock is working, the next step is to review the user interface instructions.
 
-</details>
-
-<details>
-<summary>4. User interface instructions</summary>
+### (4) User interface instructions
 
 **Get Modellist**
 
@@ -750,19 +791,11 @@ Click the “Add Evaluation” button. Ensure that the "Added Successfully" mess
 
 Instructions confirmation is now complete. In the next step, we will establish end-to-end communication from the frontend to the backend and OpenAI, conducting final operational checks.
 
-</details>
+## :sparkles: Step-6. End-to-end communications
 
-</details>
+### (1) Frontend to Backend with Mock APIs
 
-<details>
-<summary>Step-6. End-to-end communications</summary>
-
-### Step-6. End-to-end communications
-
-<details>
-<summary>1. frontend to backend</summary>
-
-**Start Backend Server**
+**Run a backend server**
 
 Start the backend server at this point, still specifying PRE_RUNMODE='Mock'.
 
@@ -775,7 +808,7 @@ Press CTRL+C to quit
 
 ```
 
-**Modifying the .env.local**
+**Switch from mock to real**
 
 Adjusting frontend environment settings. Set the environment variable NEXT_PUBLIC_API_SERVER_URL to the address (including the port number) of the Flask Server you have just started.
 
@@ -786,7 +819,7 @@ NEXT_PUBLIC_MAX_PROMPT_FILESIZE=100000
 NEXT_PUBLIC_APP_VERSION=$npm_package_version
 ```
 
-**Run the frontend**
+**Run a frontend server**
 
 Run the frontend server.
 
@@ -806,13 +839,14 @@ $ npm run dev
 
 ```
 
-**Launching browser**
+**Open Browser**
 
 Launch your web browser and enter the following URL:
 
 URL: http://(your-ip-address):3000/pre
 
-**Get Modellist**
+**Some Instructions**
+
 Click the "Get Modellist" button, and check the backend server console log.
 
 ```
@@ -820,8 +854,6 @@ Click the "Get Modellist" button, and check the backend server console log.
 20240707 14:57:20.335 INFO     app      --- GET /get_modellist return ---
 127.0.0.1 - - [07/Jul/2024 14:57:20] "GET /get_modellist HTTP/1.1" 200 -
 ```
-
-**Add Question**
 
 Next, input appropriate strings into the Prompt Class and Prompt fields, click the “Ask Question” button.
 
@@ -861,10 +893,7 @@ $
 > [!NOTE]
 > The response data is generated based on mock data (pre_mockdata.json).
 
-</details>
-
-<details>
-<summary>2. frontend to backend and OpenAI</summary>
+### (2) Communicate OpenAI
 
 After stopping the backend you started earlier, modify the '.env' file.
 
@@ -921,40 +950,36 @@ $ cat app.log
 $
 ```
 
-</details>
+# :musical_note: How To Use
 
-</details>
-
-## How To Use
-
-### Question/Answering
+## :speech_balloon: Question/Answering
 
 When you launch the backend and frontend and access it from a browser, the following initial screen will be displayed.
 QA basically only requires performing five operations.
 
 ![initial_screen](./images/initial_screen.png)
 
-#### 1. Get Modellist
+### (1) Get Modellist
 
 Press the button and select the model you want to use from the list.
 
-#### 2. Input Prompt Class
+### (2) Input Prompt Class
 
 The Prompt class represents a perspective for experimenting with various prompts. It will also serve to categorize prompts by this perspective when evaluating their values in the future. Entering concise strings will facilitate easier analysis.
 
-#### 3. Input Prompt Class
+### (3) Input Prompt
 
 There are three ways to enter a prompt:
 
-##### (1)Direct
+**Direct**
 
 - Enter text directly from the keyboard.
 
-##### (2)Copy and Paste
+**Copy and Paste**
 
 - Copy the prompt you want to enter and paste it into the Prompt field.
 
-##### (3)Load text file
+**Load template file**
 
 - Loads a prompt template file that you have previously created.
 
@@ -971,7 +996,7 @@ There are three ways to enter a prompt:
 4. Of course, after loading the file, you can change the prompt in the Prompt field.
    i Of course, after loading the file, you can change the prompt in the Prompt field.
 
-#### 4. Set temperature
+### (4) Set temperature
 
 Set the temperature.
 
@@ -985,21 +1010,21 @@ https://platform.openai.com/docs/api-reference/chat/create
 > [!IMPORTANT]
 > According to the documentation above, it states that the temperature can be set between 0 and 2. However, I recall it previously being limited to 0 to 1. Additionally, an example of a "Higher Value" is given as 0.8, which is below 1. In this project, I aim for a more deterministic response. Due to these considerations, I've set the temperature range in this application to 0 to 1, with the initial value set to 0.2.
 
-#### 5. Click "Ask Question" button
+### (5) Submit
 
 Once you have completed the above three inputs, the "Ask Question" button will be enabled. Review the content and click to send a request to OpenAI.
 
 ![qa_sample](./images/qa_sample.png)
 
-### QA Logs
+## :memo: QA Logs
 
 When you submit a query using "Ask Question" and receive a response, the response content and some attributes of the object will be displayed on the right side of the screen. This information will also be saved to a file as "QA Log".
 
-#### 1. Directory and File Format for Saving
+### (1) Log File Location
 
 The log will be saved as a text file in TOML format in the directory specified by the PRE_QA_LOG_DIR environment variable.
 
-#### 2. QA-ID
+### (2) QA-ID
 
 A unique ID that identifies the combination of Request and Response in QA is automatically assigned.
 
@@ -1013,7 +1038,7 @@ The main goal of this project is to refine prompt usage techniques through trial
 
 The QA log file is named QA-ID.toml and is saved for each QA session.
 
-#### 3. QA-Log File Structure
+### (3) Log File Formats
 
 The file is composed of two tables: qa_request and qa_response. The qa_request.messages field is an array.
 
@@ -1039,28 +1064,31 @@ completion_tokens = 60
 prompt_tokens = 26
 ```
 
-### Evaluation
+## :1st_place_medal: Evaluation
 
 The response obtained is assessed to determine how well it matches the expected outcome from the perspective of the Prompt Class.
 The evaluation process is completed in three steps:
 
-#### 1. Rating
+### (1) Rating
 
 Response messages are rated quantitatively on a three-point scale based on evaluation criteria. However, to accommodate more nuanced evaluations, you can enter values in 0.5-point increments.
 
-#### 2. Comments
+### (2) Comments
 
 Provide a qualitative evaluation of the response message. This can also be used as a memo.
 
-#### 3. Add Evaluation
+> [!IMPORTANT]
+> We plan to add a feature to this application that will allow users to search and analyze evaluation data stored in the database. To ensure that the data can be effectively filtered during keyword searches, please use clear and relevant keywords in your comments.
+
+### (3) Add Evaluation
 
 When you click the "Add Evaluation" button, the evaluation details will be saved to the database.
 
-### Database
+## :mag: Database
 
 The QA-ID and its evaluation details are saved in a database.
 
-#### 1. Table and Schema
+### (1) Table and Schema
 
 There is only one table, named "evaluation". The schema information is as follows:
 
@@ -1086,7 +1114,7 @@ CREATE TABLE evaluation (
 sqlite>
 ```
 
-#### 2. Evaluation Table
+### (2) Evaluation Table
 
 The table attributes and the origin of their values.
 
@@ -1101,7 +1129,7 @@ The table attributes and the origin of their values.
 | rating            | Rating            | User    |
 | comment           | User Comments     | User    |
 
-#### 3. Saved Data Sample
+### (3) Saved Data Sample
 
 This is an example of registration when using a mock.
 
@@ -1112,7 +1140,7 @@ sqlite>
 
 ```
 
-## LICENSE
+# :balance_scale: LICENSE
 
 MIT License
 

@@ -1,4 +1,5 @@
 .env
+.model_env.toml
 log/
 .mypy_cache/
 __pycache__/
