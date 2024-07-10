@@ -39,12 +39,12 @@ This documentation is designed to be straightforward and easy to understand, par
     - [(1) Node Packages](#1-node-packages)
     - [(2) Setting environment variables](#2-setting-environment-variables-1)
     - [(3) Static Check](#3-static-check-1)
-  - [:running_woman: Step-5. Run Frontend](#running_woman-step-5-run-frontend)
+  - [:running_woman: Step-5: Run Frontend](#running_woman-step-5-run-frontend)
     - [1. Run a frontend application](#1-run-a-frontend-application)
     - [(2) Open Browser](#2-open-browser)
     - [(3) Setup and run mock server](#3-setup-and-run-mock-server)
     - [(4) User interface instructions](#4-user-interface-instructions)
-  - [:sparkles: Step-6. End-to-end communications](#sparkles-step-6-end-to-end-communications)
+  - [:sparkles: Step-6: End-to-end communications](#sparkles-step-6-end-to-end-communications)
     - [(1) Frontend to Backend with Mock APIs](#1-frontend-to-backend-with-mock-apis)
     - [(2) Communicate OpenAI](#2-communicate-openai)
 - [:musical_note: How To Use](#musical_note-how-to-use)
@@ -665,7 +665,7 @@ $
 > [!NOTE]
 > If the type check passes, no messages will be output.
 
-## :running_woman: Step-5. Run Frontend
+## :running_woman: Step-5: Run Frontend
 
 ### 1. Run a frontend application
 
@@ -791,7 +791,7 @@ Click the “Add Evaluation” button. Ensure that the "Added Successfully" mess
 
 Instructions confirmation is now complete. In the next step, we will establish end-to-end communication from the frontend to the backend and OpenAI, conducting final operational checks.
 
-## :sparkles: Step-6. End-to-end communications
+## :sparkles: Step-6: End-to-end communications
 
 ### (1) Frontend to Backend with Mock APIs
 
