@@ -642,6 +642,8 @@ $
 
 **Style Check**
 
+Be careful not to confuse the npx command with the npm command.
+
 ```
 $ npm run lint
 
@@ -652,25 +654,20 @@ $ npm run lint
 $
 ```
 
-> [!NOTE]
-> Be careful not to confuse the npx command with the npm command.
-
 **Type Check**
+
+If the type check passes, no messages will be output.
 
 ```
 $ npx tsc
 $
 ```
 
-> [!NOTE]
-> If the type check passes, no messages will be output.
-
 ## :running_woman: Step-5: Run Frontend
 
 ### 1. Run a Frontend Application
 
-> [!NOTE]
-> This application will always run in development mode. The purpose of this project is to learn prompt engineering techniques and explore modern development methods simultaneously.
+This application will always run in development mode. The purpose of this project is to learn prompt engineering techniques and explore modern development methods simultaneously.
 
 Run the frontend server.
 
@@ -886,11 +883,6 @@ $
 
 > [!NOTE]
 > The directory name qa_log corresponds to the name specified by the environment variable PRE_QA_LOG_DIR.
-
-> [!NOTE]
-> The details about this TOML file will be explained in another section.
-
-> [!NOTE]
 > The response data is generated based on mock data (pre_mockdata.json).
 
 ### (2) Communicate OpenAI
@@ -900,20 +892,14 @@ After stopping the backend you started earlier, modify the '.env' file.
 - Verify that the correct value is set for OPENAI_API_KEY (AZURE_OPENAI_API_KEY).
 - Comment out PRE_RUNMODE.
 
-After restarting the frontend and the browser, repeat the previous steps and click on 'Ask Question.' Verify the response data from OpenAI.
+After restarting the frontend and the browser, repeat the previous steps and click on 'Ask Question.' Verify the response data from OpenAI. The response data is generated based on mock data (pre_mockdata.json).
 
 ![ask_question](./images/s06_02_ask_question.png)
-
-> [!NOTE]
-> The response data is generated based on mock data (pre_mockdata.json).
 
 > [!TIP]
 > I use "How's it going?" as a prompt when verifying the connection with OpenAI. Input operations are quick, and responses from OpenAI are usually short in length (token length), resulting in lower charges :-)
 
-To verify if the result indeed comes from OpenAI, let's inspect the logs. You should find 'app.log' created in the log directory. If the log at that timestamp contains 'OpenAI API Call' and includes the following entry, it confirms receipt of the response message from OpenAI.
-
-> [!NOTE]
-> The log directory is specified by the environment variable PRE_LOG_DIR.
+To verify if the result indeed comes from OpenAI, let's inspect the logs. You should find 'app.log' created in the log directory. If the log at that timestamp contains 'OpenAI API Call' and includes the following entry, it confirms receipt of the response message from OpenAI. The log directory is specified by the environment variable PRE_LOG_DIR.
 
 ```
 $ cat app.log
