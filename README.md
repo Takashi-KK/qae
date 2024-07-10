@@ -25,7 +25,7 @@ This documentation is designed to be straightforward and easy to understand, par
   - [:softball: Software](#softball-software)
 - [:books: Setup \& Run](#books-setup--run)
   - [:point_down: Step-1: Download](#point_down-step-1-download)
-  - [:wrench: Step-2: Setup backend environment](#wrench-step-2-setup-backend-environment)
+  - [:wrench: Step-2: Setup Backend](#wrench-step-2-setup-backend)
     - [(1) Python Packages](#1-python-packages)
     - [(2) Setting Environment Variables](#2-setting-environment-variables)
     - [(3) Static Check](#3-static-check)
@@ -271,7 +271,7 @@ $ cd (your-project)
 $ git clone https://github.com/Takashi-KK/qae.git
 ```
 
-## :wrench: Step-2: Setup backend environment
+## :wrench: Step-2: Setup Backend
 
 ### (1) Python Packages
 
