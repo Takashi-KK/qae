@@ -113,7 +113,7 @@ sequenceDiagram
 
 ## :postbox: OS
 
-I typically develop on Ubuntu, but I managed to get it running on Windows as well.
+I typically develop on Ubuntu, but I managed to get it running on Windows (using Git Bash) as well.
 
 ```
 $ lsb_release -a
@@ -137,7 +137,8 @@ If you haven't installed these software applications yet, please refer to the no
 
 <details>
 <summary> Install Python (pyenv)</summary>
-Please refer to the following website.
+Please refer to the following website. 
+We'll cover the installation process for Windows later on.
 
 https://github.com/pyenv/pyenv
 
@@ -151,6 +152,44 @@ $
 $ echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
 $ echo 'command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
 $ echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+$
+```
+
+> :bulb: **Tip:** for Windows
+>
+> Refer to the following website.
+>
+> https://github.com/pyenv-win/pyenv-win/blob/master/docs/installation.md#add-system-settings
+>
+> On Windows, I configured the PATH like this.
+>
+> First, execute the following four commands in PowerShell:
+>
+> ```
+> [System.Environment]::SetEnvironmentVariable('PYENV',$env:USERPROFILE + "\.pyenv\pyenv-win\","User")
+>
+> [System.Environment]::SetEnvironmentVariable('PYENV_ROOT',$env:USERPROFILE + "\.pyenv\pyenv-win\","User")
+>
+> [System.Environment]::SetEnvironmentVariable('PYENV_HOME',$env:USERPROFILE + "\.pyenv\pyenv-win\","User")
+>
+> [System.Environment]::SetEnvironmentVariable('path', $env:USERPROFILE + "\.pyenv\pyenv-win\bin;" + $env:USERPROFILE + "\.pyenv\pyenv-win\shims;" + [System.Environment]::GetEnvironmentVariable('path', "User"),"User")
+> ```
+>
+> Next, check to see if the environment variables are set correctly:
+>
+> > Open the Control Panel.
+> >
+> > Click System and Security, then System
+> >
+> > Click Advanced system settings on the left
+> >
+> > Inside the System Properties window, click the Environment Variables… button.
+
+Check if the `pyenv` command can be executed.
+
+```
+$ pyenv --version
+pyenv 3.1.1
 $
 ```
 
@@ -185,6 +224,17 @@ pip 24.0 from /home/takashi/.pyenv/versions/3.12.4/lib/python3.12/site-packages/
 $
 ```
 
+> :bulb: **Tip:** for Windows
+>
+> On Windows (Git Bash), the path to python will look something like this:
+>
+> ```
+> $ which python
+> /c/Users/(user-name)/.pyenv/pyenv-win/shims/python
+> ```
+>
+> Please ensure that Python can be started on PowerShell.
+
 </details>
 
 <details>
@@ -203,6 +253,36 @@ Flask 3.0.3
 Werkzeug 3.0.3
 $
 ```
+
+> :bulb: **Tip:** for Windows
+>
+> Here's an example of installing SQLite on Windows. While you can certainly set the path using a GUI, this example uses the command line.
+>
+> (1) Visit the following site and download "sqlite-tools-win-x64-3460000.zip (4.80MiB)".
+>
+> https://www.sqlite.com/download.html
+>
+> (2) Create a folder named "devpgm" at the root of the C drive, and then create another folder named "sqlite3" inside it.
+>
+> (3) Unzip the downloaded zip file and move the three files ("sqldiff.exe", "sqlite3.exe", and "sqlite3_analyzer.exe") to the "C:\devpgm\sqlite3" folder.
+>
+> (4) PowerShell run as Administrator.
+>
+> (5) Run the following command in PowerShell.
+>
+> ```
+> > $newPath = "C:\devpgn\sqlite3"
+> > Write-Output $newPath
+> C:\devpgn\sqlite3
+> > $currentPath = [System.Environment]::GetEnvironmentVariable("Path", [System.EnvironmentVariableTarget]::Machine)
+> > Write-Output $currentPath
+> ... (your-current-path) ...
+> > $newPath = $currentPath + ";" + $newPath
+> > Write-Output $newPath
+> ... (your-current-path);C:\devpgn\sqlite3
+> > [System.Environment]::SetEnvironmentVariable("Path", $newPath, [System.EnvironmentVariableTarget]::Machine)
+> >
+> ```
 
 </details>
 
