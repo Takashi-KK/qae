@@ -254,6 +254,23 @@ Werkzeug 3.0.3
 $
 ```
 
+</details>
+
+<details>
+<summary>Install Sqlite</summary>
+For ubuntu, you can install it as follows.
+
+```
+$ sudo apt install sqlite3
+...
+$
+$ which sqlite3
+/usr/bin/sqlite3
+$ sqlite3 --version
+3.37.2 2022-01-06 13:25:41 872ba......
+$
+```
+
 > :bulb: **Tip:** for Windows
 >
 > Here's an example of installing SQLite on Windows. While you can certainly set the path using a GUI, this example uses the command line.
@@ -283,23 +300,6 @@ $
 > > [System.Environment]::SetEnvironmentVariable("Path", $newPath, [System.EnvironmentVariableTarget]::Machine)
 > >
 > ```
-
-</details>
-
-<details>
-<summary>Install Sqlite</summary>
-For ubuntu, you can install it as follows.
-
-```
-$ sudo apt install sqlite3
-...
-$
-$ which sqlite3
-/usr/bin/sqlite3
-$ sqlite3 --version
-3.37.2 2022-01-06 13:25:41 872ba......
-$
-```
 
 </details>
 
