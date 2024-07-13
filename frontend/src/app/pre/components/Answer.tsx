@@ -90,10 +90,9 @@ const Answer: React.FC<AnswerProps> = ({
   const [rating, setRating] = useState<number>(0.0);
   const [error, setError] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const [success, setSuccess] = useState<boolean>(false);
   const [comment, setComment] = useState<string>("");
   const [resultMessage, setResultMessage] = useState<string>("\u00a0");
-  const valueRank = (value: number, index: number): string => {
+  const valueRank = (value: number): string => {
     return value.toString();
   };
   const handleRatingChange = (event: Event, newValue: number | number[]) => {
@@ -136,7 +135,6 @@ const Answer: React.FC<AnswerProps> = ({
         //success
         setError("");
         setLoading(false);
-        setSuccess(true);
         setQaId("");
         setUserContent("");
         setPromptClass("");
@@ -155,14 +153,12 @@ const Answer: React.FC<AnswerProps> = ({
         const errorData = response.data as ResponseErrorData;
         setError(errorData.detail);
         setLoading(false);
-        setSuccess(false);
       }
     } catch (error) {
       console.log(error);
       if (error instanceof Error && error.message) {
         setError(error.message);
         setLoading(false);
-        setSuccess(false);
       }
     } finally {
       setLoading(false);

@@ -13,7 +13,9 @@ const SideBar: React.FC<SideBarProps> = ({
   onClose,
   setUserContent,
 }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [files, setFiles] = useState<File[]>([]);
+  //const [, setFiles] = useState<File[]>([]);
 
   const onDrop = useCallback(
     (accFiles: File[]) => {
@@ -47,7 +49,7 @@ const SideBar: React.FC<SideBarProps> = ({
         setUserContent("Error: invalid file type");
       }
     },
-    [setUserContent],
+    [setUserContent]
   );
 
   const { getRootProps, getInputProps } = useDropzone({ onDrop });

@@ -112,12 +112,12 @@ const Question: React.FC<QuestionProps> = ({
     console.log(inputValue);
     setPromptClass(inputValue);
   };
-  const valueTemperature = (value: number, index: number): string => {
+  const valueTemperature = (value: number): string => {
     return value.toString();
   };
   const handleTemperatureChange = (
     event: Event,
-    newValue: number | number[],
+    newValue: number | number[]
   ) => {
     if (typeof newValue === "number") {
       console.log(newValue);

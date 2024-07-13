@@ -126,6 +126,16 @@ $
 
 ```
 
+The instructions below assume you are using the command line on Ubuntu (Linux) Terminal or Git Bash. For Windows-specific steps, please refer to ":bulb: Tip: for Windows".
+
+> [!IMPORTANT]
+> If you are using a multibyte language on Windows, make sure to change the system locale to Unicode UTF-8.
+>
+> Ref: How to Change System Locale in Windows 10
+> https://www.tenforums.com/tutorials/132050-change-system-locale-windows-10-a.html
+>
+> Please use the `chcp` command in PowerShell to verify that the `active code page: 65001`.
+
 ## :softball: Software
 
 - Python >= 3.10, (pyenv)
@@ -300,6 +310,14 @@ $
 > > [System.Environment]::SetEnvironmentVariable("Path", $newPath, [System.EnvironmentVariableTarget]::Machine)
 > >
 > ```
+>
+> (6) Check PATH
+>
+> ```
+> $ which sqlite3
+> /c/devpgm/sqlite3/sqlite3
+> $
+> ```
 
 </details>
 
@@ -334,6 +352,41 @@ $ node --version
 v20.14.0
 $
 ```
+
+> :bulb: **Tip:** for Windows
+>
+> Install and use NVM for Windows.
+> You need to create a folder named "devpgm" at the root of the C drive. (see "Install sqlite")
+>
+> (1) Access the following website and click the "Latest" button in the "Releases" section on the right side of the page.
+>
+> https://github.com/coreybutler/nvm-windows/
+>
+> (2) Download and unzip "nvm-setup.zip" from the "Assets" section.
+>
+> (3) Run "nvm-setup.exe" to start the installation.
+>
+> (4) When prompted for the location during installation, set it as follows:
+>
+> - Select Destination Location: C:\devpgm\nvm
+> - Set Node.js Symlink: C:\devpgm\nodejs
+>
+> (5) After installing NVM for Windows, use Git Bash to check the available Node.js versions and install the desired version.
+>
+> ```
+> $ nvm --version
+> 1.1.12
+> $ nvm list available
+> ...
+> $ nvm install 20.15.0
+> $ nvm use 20.15.0
+> $ nvm list
+>   *20.15.0 (Currentry using 64-bit executable)
+>    18.16.1
+> $ node --version
+> v20.15.0
+> $
+> ```
 
 </details>
 
@@ -381,7 +434,7 @@ OPENAI_API_KEY="sk-......."
 PRE_DEF_MODEL=".model_env.toml"
 
 # OpenAI API Runmode
-#PRE_RUNMODE="Mock"		# Runmode: "Mock" or nothing
+PRE_RUNMODE="Mock"		# Runmode: "Mock" or nothing
 
 # Mockdata for OpenAI API Response
 PRE_MOCKDATA_FILE="./pre_mockdata.json"
@@ -737,8 +790,81 @@ $
 **Type Check**
 
 If the type check passes, no messages will be output.
+For more details, see below.
+
+https://www.typescriptlang.org/tsconfig/
 
 ```
+$ npx tsc --showConfig
+{
+    "compilerOptions": {
+        "lib": [
+            "dom",
+            "dom.iterable",
+            "esnext"
+        ],
+        "allowJs": true,
+        "skipLibCheck": true,
+        "strict": true,
+        "noEmit": true,
+        "esModuleInterop": true,
+        "module": "esnext",
+        "moduleResolution": "bundler",
+        "resolveJsonModule": true,
+        "isolatedModules": true,
+        "jsx": "preserve",
+        "incremental": true,
+        "plugins": [
+            {
+                "name": "next"
+            }
+        ],
+        "paths": {
+            "@/*": [
+                "./src/*"
+            ]
+        },
+        "allowSyntheticDefaultImports": true,
+        "resolvePackageJsonExports": true,
+        "resolvePackageJsonImports": true,
+        "preserveConstEnums": true,
+        "noImplicitAny": true,
+        "noImplicitThis": true,
+        "strictNullChecks": true,
+        "strictFunctionTypes": true,
+        "strictBindCallApply": true,
+        "strictPropertyInitialization": true,
+        "alwaysStrict": true,
+        "useUnknownInCatchVariables": true
+    },
+    "files": [
+        "./next-env.d.ts",
+        "./src/theme.ts",
+        "./src/app/api/interfaces.ts",
+        "./src/app/api/userid/route.ts",
+        "./src/app/pre/util/api.ts",
+        "./src/app/layout.tsx",
+        "./src/app/page.tsx",
+        "./src/app/pre/page.tsx",
+        "./src/app/pre/components/Answer.tsx",
+        "./src/app/pre/components/NavBar.tsx",
+        "./src/app/pre/components/Question.tsx",
+        "./src/app/pre/components/SideBar.tsx",
+        "./.next/types/app/layout.ts",
+        "./.next/types/app/api/userid/route.ts",
+        "./.next/types/app/pre/page.ts"
+    ],
+    "include": [
+        "next-env.d.ts",
+        "**/*.ts",
+        "**/*.tsx",
+        ".next/types/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
+$
 $ npx tsc
 $
 ```

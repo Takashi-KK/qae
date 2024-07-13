@@ -20,8 +20,7 @@ const NavBar: React.FC<NavBarProps> = ({ onDrawerOpen, userId, setUserId }) => {
     async function getUserID() {
       const res: Response = await fetch(url);
       const data: ResponseData = await res.json();
-      let ipAddress = data.response["user-address"];
-      //ipAddress = "192.168.1.2";   // for debug
+      const ipAddress = data.response["user-address"];
       console.log(`IP-Address: ${ipAddress}`);
       const parts = ipAddress.split(".");
       let userId = USER_ID_PREFIX + USER_ID_DEFAULT;
